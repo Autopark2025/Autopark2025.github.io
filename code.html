@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code & Algorithme | Projet Robot</title>
+    <style>
+        :root {
+            --bg-dark: #0a0a14;
+            --card-bg: #111126;
+            --accent-cyan: #00ffcc;
+            --accent-blue: #0077ff;
+            --text-main: #ffffff;
+            --text-muted: #8b8da9;
+            --border-color: #1f1f3e;
+            --code-bg: #05050a;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 950px;
+            width: 100%;
+            padding: 40px 20px;
+        }
+
+        /* Barre de Navigation */
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 15px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 30px;
+            margin-bottom: 40px;
+        }
+
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--accent-cyan);
+        }
+
+        header {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        header h1 {
+            font-size: 2.3rem;
+            color: #fff;
+            margin: 0;
+        }
+
+        header p {
+            color: var(--accent-cyan);
+            font-size: 1.1rem;
+            margin-top: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: var(--text-main);
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+
+        /* Liste de la logique */
+        .logic-list {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 25px 25px 25px 40px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .logic-list li {
+            margin-bottom: 12px;
+        }
+
+        .logic-list strong {
+            color: var(--accent-cyan);
+        }
+
+        /* Zone de Code Source */
+        .code-block {
+            background-color: var(--code-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+            color: #e0e0e0;
+            line-height: 1.5;
+        }
+
+        .code-keyword { color: #ff79c6; }
+        .code-type { color: #8be9fd; }
+        .code-comment { color: #6272a4; font-style: italic; }
+        .code-number { color: #bd93f9; }
+
+        footer {
+            text-align: center;
+            margin-top: 80px;
+            padding-top: 30px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <nav>
+            <a href="index.html">🧭 Accueil</a>
+            <a href="cablage.html">🔌 Électronique & Câblage</a>
+            <a href="code.html" class="active">💻 Code & Algorithme</a>
+        </nav>
+
+        <header>
+            <h1>Développement Algorithmique</h1>
+            <p>Logique d'évitement d'obstacles & Code source Arduino</p>
+        </header>
+
+        <main>
+            <section>
+                <h2 class="section-title">🧠 Logique d'Évitement du Robot</h2>
+                <ul class="logic-list">
+                    <li><strong>1. Avancer par défaut :</strong> Le robot active ses moteurs arrière et progresse en ligne droite tant qu'aucun obstacle n'est détecté à courte portée.</li>
+                    <li><strong>2. Détection critique :</strong> Si la distance mesurée face au robot par le capteur URM37 passe en dessous du seuil limite, les moteurs s'arrêtent immédiatement.</li>
+                    <li><strong>3. Phase de Scan :</strong> Le servomoteur oriente le capteur ultrason à gauche (balayage), puis à droite pour enregistrer l'espace disponible de chaque côté.</li>
+                    <li><strong>4. Prise de Décision :</strong> L'algorithme compare les deux distances de scan et ordonne un pivotement des roues vers la direction offrant le maximum d'espace libre avant de repartir en avant.</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2 class="section-title">💾 Code Source de Contrôle (Structure Globale)</h2>
+                <div class="code-block">
+<span class="code-comment">// Configuration des broches pour la carte Romeo BLE du Cherokey 4WD</span>
+<span class="code-keyword">#define</span> speedPin_M1 <span class="code-number">5</span>
+<span class="code-keyword">#define</span> directionPin_M1 <span class="code-number">4</span>
+<span class="code-keyword">#define</span> speedPin_M2 <span class="code-number">6</span>
+<span class="code-keyword">#define</span> directionPin_M2 <span class="code-number">7</span>
+
+<span class="code-type">void</span> <span class="code-keyword">setup</span>() {
+    <span class="code-comment">// Configuration des pins de commande des moteurs en sortie</span>
+    pinMode(speedPin_M1, OUTPUT);
+    pinMode(directionPin_M1, OUTPUT);
+    pinMode(speedPin_M2, OUTPUT);
+    pinMode(directionPin_M2, OUTPUT);
+    
+    Serial.begin(<span class="code-number">9600</span>);
+}
+
+<span class="code-type">void</span> <span class="code-keyword">loop</span>() {
+    <span class="code-comment">// La boucle principale de traitement et d'évitement viendra s'insérer ici</span>
+}
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>© 2026 • Documentation Technique de Projet L2</p>
+        </footer>
+    </div>
+
+</body>
+</html>
