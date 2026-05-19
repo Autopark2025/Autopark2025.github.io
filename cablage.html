@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Électronique & Câblage | Projet Robot</title>
+    <style>
+        :root {
+            --bg-dark: #0a0a14;
+            --card-bg: #111126;
+            --accent-cyan: #00ffcc;
+            --accent-blue: #0077ff;
+            --text-main: #ffffff;
+            --text-muted: #8b8da9;
+            --border-color: #1f1f3e;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 950px;
+            width: 100%;
+            padding: 40px 20px;
+        }
+
+        /* Barre de Navigation */
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 15px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 30px;
+            margin-bottom: 40px;
+        }
+
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--accent-cyan);
+        }
+
+        header {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        header h1 {
+            font-size: 2.3rem;
+            color: #fff;
+            margin: 0;
+        }
+
+        header p {
+            color: var(--accent-cyan);
+            font-size: 1.1rem;
+            margin-top: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: var(--text-main);
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+
+        /* Style du Tableau */
+        .table-container {
+            overflow-x: auto;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th, td {
+            padding: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background-color: rgba(0, 119, 255, 0.1);
+            color: var(--accent-cyan);
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+        }
+
+        td {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        td strong {
+            color: #fff;
+        }
+
+        /* Affichage de l'image */
+        .image-container {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        .btn-next {
+            display: inline-block;
+            margin-top: 40px;
+            padding: 12px 24px;
+            background: linear-gradient(45deg, var(--accent-blue), #0052cc);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: opacity 0.3s;
+        }
+
+        .btn-next:hover {
+            opacity: 0.9;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 80px;
+            padding-top: 30px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <nav>
+            <a href="index.html">🧭 Accueil</a>
+            <a href="cablage.html" class="active">🔌 Électronique & Câblage</a>
+            <a href="code.html">💻 Code & Algorithme</a>
+        </nav>
+
+        <header>
+            <h1>Architecture Électronique</h1>
+            <p>Cartographie des entrées/sorties & Schéma Fritzing</p>
+        </header>
+
+        <main>
+            <section>
+                <h2 class="section-title">📊 Tableau des Connexions (Pins Arduino)</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Composant</th>
+                                <th>Fonction / Broche Arduino</th>
+                                <th>Type de Pin</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Moteur 1 (M1)</strong></td>
+                                shadow-color: var(--accent-cyan);
+                                <td>Vitesse (speedPin_M1) : <strong>Pin 5</strong><br>Direction (directionPin_M1) : <strong>Pin 4</strong></td>
+                                <td>PWM<br>Numérique</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Moteur 2 (M2)</strong></td>
+                                <td>Vitesse (speedPin_M2) : <strong>Pin 6</strong><br>Direction (directionPin_M2) : <strong>Pin 7</strong></td>
+                                <td>PWM<br>Numérique</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Servomoteur</strong></td>
+                                <td>Signal de commande : <strong>Pin 9</strong></td>
+                                <td>Servo</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Capteur Ultrasons (URM37)</strong></td>
+                                <td>Écho (URPWM) : <strong>Pin 3</strong><br>Déclencheur (URTRIG) : <strong>Pin 10</strong></td>
+                                <td>Entrée Numérique<br>Sortie Numérique</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section>
+                <h2 class="section-title">🗺️ Schéma de Câblage Détaillé</h2>
+                <p style="color: var(--text-muted); line-height: 1.5;">
+                    Le schéma ci-dessous représente les connexions du servomoteur et du capteur à ultrasons <strong>DFRobot URM37 V3.2</strong> sur la carte mère principale <strong>RoMeo BLE V1.0</strong>. Les liaisons d'alimentation partagent une masse commune (GND) pour stabiliser les signaux de mesure.
+                </p>
+                <div class="image-container">
+                    <img src="cablage_robot.png" alt="Schéma Fritzing du Robot Cherokey 4WD">
+                </div>
+            </section>
+
+            <div style="text-align: right;">
+                <a href="code.html" class="btn-next">Passer à l'Algorithme & Code ➔</a>
+            </div>
+        </main>
+
+        <footer>
+            <p>© 2026 • Documentation Technique de Projet L2</p>
+        </footer>
+    </div>
+
+</body>
+</html>
