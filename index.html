@@ -13,6 +13,7 @@
             --text-main: #ffffff;
             --text-muted: #8b8da9;
             --border-color: #1f1f3e;
+            --success-green: #00ff66;
         }
 
         body {
@@ -57,7 +58,7 @@
 
         header {
             text-align: center;
-            padding: 40px 0 20px 0;
+            padding: 20px 0;
         }
 
         header h1 {
@@ -91,11 +92,11 @@
 
         @media (min-width: 768px) {
             .hero-section {
-                flex-direction: row-reverse; /* Photo à droite sur grand écran */
+                flex-direction: row-reverse;
                 text-align: left;
             }
             .hero-text {
-                flex: 1.2; /* Un peu plus d'espace pour le texte */
+                flex: 1.2;
             }
             .hero-image {
                 flex: 1;
@@ -114,7 +115,6 @@
             font-size: 1.05rem;
         }
 
-        /* Style de la Photo du Robot */
         .hero-image {
             text-align: center;
             width: 100%;
@@ -122,11 +122,81 @@
 
         .hero-image img {
             max-width: 100%;
-            max-height: 400px; /* Légèrement plus grande */
+            max-height: 350px;
             object-fit: cover;
             border-radius: 12px;
             border: 2px solid var(--border-color);
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Section des 3 parties du Projet */
+        .section-title {
+            font-size: 1.6rem;
+            color: #fff;
+            margin-top: 50px;
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .parts-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        @media (min-width: 768px) {
+            .parts-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .part-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            position: relative;
+            transition: transform 0.3s;
+        }
+
+        .part-card.active {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 4px 15px rgba(0, 255, 204, 0.1);
+        }
+
+        .part-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            padding: 4px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+        }
+
+        .badge-done {
+            background-color: rgba(0, 255, 102, 0.1);
+            color: var(--success-green);
+            border: 1px solid var(--success-green);
+        }
+
+        .badge-todo {
+            background-color: rgba(139, 141, 169, 0.1);
+            color: var(--text-muted);
+            border: 1px solid var(--border-color);
+        }
+
+        .part-card h3 {
+            margin-top: 10px;
+            color: #fff;
+            font-size: 1.2rem;
+        }
+
+        .part-card p {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            line-height: 1.5;
         }
 
         .btn-start {
@@ -166,26 +236,55 @@
 
         <header>
             <h1>Portfolio Technique</h1>
-            <p>Projet Robot Mobile Autonome</p>
+            <p>Projet Robot Mobile Cherokey 4WD</p>
         </header>
 
         <main>
             <div class="hero-section">
                 <div class="hero-image">
-                    <img src="Robot.jpeg" alt="Photo réelle du Robot Cherokey 4WD">
+                    <img src="Robot.jpg" alt="Photo réelle du Robot Cherokey 4WD">
                 </div>
 
                 <div class="hero-text">
                     <h2>Bienvenue sur mon projet de L2</h2>
                     <p>
-                        Ce portfolio présente les travaux réalisés sur notre plateforme de robot mobile 4WD, visible ci-contre. 
-                        L'objectif principal est de concevoir un système embarqué capable de naviguer de manière autonome en évitant les obstacles en temps réel.
+                        Ce portfolio suit le développement et la programmation de notre robot mobile 4WD. 
+                        Conçu dans un cadre académique, ce projet vise à explorer les systèmes embarqués, la gestion des capteurs en temps réel et l'autonomie robotique.
                     </p>
                     <p>
-                        À travers les différents onglets, vous découvrirez la cartographie complète de notre architecture électronique, le câblage de nos capteurs ultrasoniques, ainsi que l'algorithme d'évitement développé sous environnement Arduino.
+                        Le projet global est pensé comme un développement modulaire découpé en plusieurs objectifs distincts pour enrichir le comportement du robot.
                     </p>
-                    <a href="cablage.html" class="btn-start">Découvrir le projet ➔</a>
+                    <a href="cablage.html" class="btn-start">Explorer le Câblage de la Partie 1 ➔</a>
                 </div>
+            </div>
+
+            <h2 class="section-title">🗺️ Structure Globale du Projet</h2>
+            <div class="parts-grid">
+                
+                <div class="part-card active">
+                    <span class="part-badge badge-done">Opérationnel</span>
+                    <h3>Partie 1 : Résolution de Labyrinthe</h3>
+                    <p>
+                        Mise en place de l'évitement d'obstacles autonome. Utilisation d'un servomoteur pour orienter un capteur ultrasonique URM37, analyse des distances et prise de décision automatique.
+                    </p>
+                </div>
+
+                <div class="part-card">
+                    <span class="part-badge badge-todo">En projet</span>
+                    <h3>Partie 2 : Suivi de Ligne</h3>
+                    <p>
+                        Intégration et calibrage de capteurs infrarouges sous le châssis pour permettre au robot de détecter une piste au sol et de suivre une trajectoire précise à haute vitesse.
+                    </p>
+                </div>
+
+                <div class="part-card">
+                    <span class="part-badge badge-todo">En projet</span>
+                    <h3>Partie 3 : Suivi d'Objet</h3>
+                    <p>
+                        Développement d'algorithmes de tracking pour permettre au robot de détecter, cibler et suivre un objet en mouvement situé dans son champ de vision direct.
+                    </p>
+                </div>
+
             </div>
         </main>
 
