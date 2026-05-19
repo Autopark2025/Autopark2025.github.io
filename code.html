@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Code & Algorithme | Projet Robot</title>
+    <title>Partie 1 : Algorithme & Code Arduino</title>
     <style>
         :root {
             --bg-dark: #0a0a14;
@@ -13,7 +13,7 @@
             --text-main: #ffffff;
             --text-muted: #8b8da9;
             --border-color: #1f1f3e;
-            --code-bg: #05050a;
+            --code-bg: #05050f;
         }
 
         body {
@@ -32,230 +32,245 @@
             padding: 40px 20px;
         }
 
-        /* Barre de Navigation */
-        nav {
+        /* Fil d'Ariane / Navigation interne */
+        .breadcrumb {
             display: flex;
-            justify-content: center;
-            gap: 20px;
-            padding: 15px;
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 30px;
-            margin-bottom: 40px;
+            gap: 10px;
+            margin-bottom: 30px;
+            font-size: 0.95rem;
         }
 
-        nav a {
+        .breadcrumb a {
             color: var(--text-muted);
             text-decoration: none;
-            font-weight: bold;
-            font-size: 0.95rem;
-            transition: color 0.3s;
+            transition: color 0.2s;
         }
 
-        nav a:hover, nav a.active {
+        .breadcrumb a:hover {
             color: var(--accent-cyan);
         }
 
-        header {
-            text-align: center;
-            padding: 20px 0;
+        .breadcrumb span {
+            color: var(--border-color);
+        }
+
+        .breadcrumb .current {
+            color: var(--accent-cyan);
+            font-weight: bold;
         }
 
         header h1 {
-            font-size: 2.3rem;
+            font-size: 2.2rem;
+            margin: 0 0 10px 0;
             color: #fff;
-            margin: 0;
         }
 
         header p {
-            color: var(--accent-cyan);
+            color: var(--text-muted);
             font-size: 1.1rem;
-            margin-top: 5px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            margin-bottom: 40px;
         }
 
-        .section-title {
+        .section-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .section-card h2 {
+            margin-top: 0;
+            color: #fff;
             font-size: 1.5rem;
-            color: var(--text-main);
-            margin-top: 40px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
             margin-bottom: 20px;
         }
 
-        /* Liste de la logique */
-        .logic-list {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 25px 25px 25px 40px;
+        .section-card p {
             color: var(--text-muted);
             line-height: 1.6;
         }
 
-        .logic-list li {
-            margin-bottom: 12px;
-        }
-
-        .logic-list strong {
-            color: var(--accent-cyan);
-        }
-
-        /* Zone de Code Source */
-        .code-block {
+        /* Fenêtre de Code Source Style IDE */
+        .code-window {
             background-color: var(--code-bg);
             border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 20px;
+            font-family: 'Consolas', 'Fira Code', monospace;
+            font-size: 0.95rem;
+            line-height: 1.5;
             overflow-x: auto;
+            color: #d1d5db;
         }
 
-        .code-block pre {
-            margin: 0;
-            font-family: 'Consolas', 'Courier New', Courier, monospace;
-            font-size: 0.92rem;
-            color: #e0e0e0;
-            line-height: 1.6;
-            white-space: pre;
+        pre { margin: 0; }
+
+        /* Coloration syntaxique */
+        .keyword { color: #ff79c6; font-weight: bold; }
+        .type { color: #8be9fd; font-style: italic; }
+        .comment { color: #6272a4; font-style: italic; }
+        .number { color: #bd93f9; }
+        .string { color: #f1fa8c; }
+        .builtin { color: #50fa7b; }
+
+        .btn-back {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 12px 24px;
+            background: #1f1f3e;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: background 0.2s;
         }
 
-        .code-keyword { color: #ff79c6; font-weight: bold; }
-        .code-type { color: #8be9fd; }
-        .code-comment { color: #6272a4; font-style: italic; }
-        .code-number { color: #bd93f9; }
-        .code-string { color: #f1fa8c; }
-
-        footer {
-            text-align: center;
-            margin-top: 80px;
-            padding-top: 30px;
-            border-top: 1px solid var(--border-color);
-            color: var(--text-muted);
+        .btn-back:hover {
+            background: #2b2b54;
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <nav>
+        <div class="breadcrumb">
             <a href="index.html">🧭 Accueil</a>
-            <a href="cablage.html">🔌 Électronique & Câblage</a>
-            <a href="code.html" class="active">💻 Code & Algorithme</a>
-        </nav>
+            <span>/</span>
+            <a href="labyrinthe.html">🤖 Partie 1 : Labyrinthe</a>
+            <span>/</span>
+            <span class="current">💻 Code & Algorithme</span>
+        </div>
 
         <header>
-            <h1>Développement Algorithmique</h1>
-            <p>Logique d'évitement d'obstacles & Code source Arduino</p>
+            <h1>Code Source Arduino</h1>
+            <p>Étude de l'algorithme décisionnel d'évitement d'obstacles en environnement C++ / Arduino.</p>
         </header>
 
         <main>
-            <section>
-                <h2 class="section-title">🧠 Logique d'Évitement du Robot</h2>
-                <ul class="logic-list">
-                    <li><strong>1. Avancer par défaut :</strong> Le robot progresse à vitesse modérée tant que la voie est libre. Le seuil critique est fixé à 20 cm pour écarter les valeurs fantômes.</li>
-                    <li><strong>2. Recul de dégagement :</strong> Dès qu'un obstacle est détecté, le robot stoppe net, puis effectue une courte marche arrière pour s'offrir un espace de manœuvre.</li>
-                    <li><strong>3. Scan directionnel :</strong> Le servomoteur oriente le capteur URM37 à 30° puis à 150° pour évaluer les distances disponibles à gauche et à droite.</li>
-                    <li><strong>4. Pivot et Forçage :</strong> Le robot pivote du côté le plus dégagé, puis force une avancée de 600 ms afin de sortir complètement de la zone d'encombrement avant de reprendre son cycle.</li>
-                </ul>
-            </section>
+            <div class="section-card">
+                <h2>Logique Globale de Décision</h2>
+                <p>
+                    Le programme exécute une boucle continue. Le robot avance en ligne droite tout en mesurant constamment la distance face à lui. Dès qu'un obstacle franchit le seuil critique des <strong>20 cm</strong>, le robot stoppe net sa course. 
+                </p>
+                <p>
+                    Le servomoteur oriente ensuite le capteur à ultrason à 30° (droite) puis à 150° (gauche). L'algorithme compare ces deux distances, choisit la voie la plus dégagée, effectue son pivot et force une avancée rapide pour s'extraire de l'impasse.
+                </p>
+            </div>
 
-            <section>
-                <h2 class="section-title">💾 Code Source Arduino Complet</h2>
-                <div class="code-block">
-                    <pre><span class="code-keyword">#include</span> <span class="code-string">&lt;Servo.h&gt;</span>
+            <div class="section-card">
+                <h2>Code d'Évitement Complet</h2>
+                <div class="code-window">
+<pre><span class="comment">#include &lt;Servo.h&gt;</span>
 
-<span class="code-comment">// --- CONFIGURATION PINS ---</span>
-<span class="code-type">int</span> speedPin_M1 = <span class="code-number">5</span>; <span class="code-type">int</span> speedPin_M2 = <span class="code-number">6</span>;
-<span class="code-type">int</span> directionPin_M1 = <span class="code-number">4</span>; <span class="code-type">int</span> directionPin_M2 = <span class="code-number">7</span>;
-<span class="code-type">int</span> URPWM = <span class="code-number">3</span>; <span class="code-type">int</span> URTRIG = <span class="code-number">10</span>;
+<span class="type">int</span> speedPin_M1 = <span class="number">5</span>;     <span class="comment">// Moteur Droit Vitesse</span>
+<span class="type">int</span> directionPin_M1 = <span class="number">4</span>; <span class="comment">// Moteur Droit Direction</span>
+<span class="type">int</span> speedPin_M2 = <span class="number">6</span>;     <span class="comment">// Moteur Gauche Vitesse</span>
+<span class="type">int</span> directionPin_M2 = <span class="number">7</span>; <span class="comment">// Moteur Gauche Direction</span>
+
+<span class="type">int</span> URTRIG = <span class="number">10</span>;         <span class="comment">// Trig ultrason</span>
+<span class="type">int</span> URPWM = <span class="number">3</span>;           <span class="comment">// Echo ultrason</span>
 
 Servo myservo;
 
-<span class="code-type">void</span> <span class="code-keyword">setup</span>() {
-  Serial.begin(<span class="code-number">9600</span>);
-  pinMode(speedPin_M1, OUTPUT); pinMode(speedPin_M2, OUTPUT);
-  pinMode(directionPin_M1, OUTPUT); pinMode(directionPin_M2, OUTPUT);
-  pinMode(URTRIG, OUTPUT); digitalWrite(URTRIG, HIGH);
-  pinMode(URPWM, INPUT);
+<span class="keyword">void</span> <span class="builtin">setup</span>() {
+  Serial.<span class="builtin">begin</span>(<span class="number">9600</span>);
+  <span class="builtin">pinMode</span>(directionPin_M1, <span class="keyword">OUTPUT</span>);
+  <span class="builtin">pinMode</span>(directionPin_M2, <span class="keyword">OUTPUT</span>);
+  <span class="builtin">pinMode</span>(URTRIG, <span class="keyword">OUTPUT</span>);
+  <span class="builtin">pinMode</span>(URPWM, <span class="keyword">INPUT</span>);
+  myservo.<span class="builtin">attach</span>(<span class="number">9</span>);
+  myservo.<span class="builtin">write</span>(<span class="number">90</span>); <span class="comment">// Capteur centré au départ</span>
+}
+
+<span class="type">int</span> MeasureDistance() {
+  <span class="builtin">digitalWrite</span>(URTRIG, <span class="keyword">LOW</span>);
+  <span class="builtin">digitalWrite</span>(URTRIG, <span class="keyword">HIGH</span>);
+  <span class="type">unsigned long</span> duration = <span class="builtin">pulseIn</span>(URPWM, <span class="keyword">LOW</span>, <span class="number">50000</span>);
+  <span class="keyword">if</span> (duration == <span class="number">0</span>) <span class="keyword">return</span> <span class="number">999</span>;
+  <span class="keyword">return</span> duration / <span class="number">50</span>;
+}
+
+<span class="keyword">void</span> carAdvance(<span class="type">int</span> leftSpeed, <span class="type">int</span> rightSpeed) {
+  <span class="builtin">digitalWrite</span>(directionPin_M1, <span class="keyword">HIGH</span>);
+  <span class="builtin">digitalWrite</span>(directionPin_M2, <span class="keyword">HIGH</span>);
+  <span class="builtin">analogWrite</span>(speedPin_M1, rightSpeed);
+  <span class="builtin">analogWrite</span>(speedPin_M2, leftSpeed);
+}
+
+<span class="keyword">void</span> carBack(<span class="type">int</span> leftSpeed, <span class="type">int</span> rightSpeed) {
+  <span class="builtin">digitalWrite</span>(directionPin_M1, <span class="keyword">LOW</span>);
+  <span class="builtin">digitalWrite</span>(directionPin_M2, <span class="keyword">LOW</span>);
+  <span class="builtin">analogWrite</span>(speedPin_M1, rightSpeed);
+  <span class="builtin">analogWrite</span>(speedPin_M2, leftSpeed);
+}
+
+<span class="keyword">void</span> carTurnLeft(<span class="type">int</span> leftSpeed, <span class="type">int</span> rightSpeed) {
+  <span class="builtin">digitalWrite</span>(directionPin_M1, <span class="keyword">HIGH</span>);
+  <span class="builtin">digitalWrite</span>(directionPin_M2, <span class="keyword">LOW</span>);
+  <span class="builtin">analogWrite</span>(speedPin_M1, rightSpeed);
+  <span class="builtin">analogWrite</span>(speedPin_M2, leftSpeed);
+}
+
+<span class="keyword">void</span> carTurnRight(<span class="type">int</span> leftSpeed, <span class="type">int</span> rightSpeed) {
+  <span class="builtin">digitalWrite</span>(directionPin_M1, <span class="keyword">LOW</span>);
+  <span class="builtin">digitalWrite</span>(directionPin_M2, <span class="keyword">HIGH</span>);
+  <span class="builtin">analogWrite</span>(speedPin_M1, rightSpeed);
+  <span class="builtin">analogWrite</span>(speedPin_M2, leftSpeed);
+}
+
+<span class="keyword">void</span> carStop() {
+  <span class="builtin">analogWrite</span>(speedPin_M1, <span class="number">0</span>);
+  <span class="builtin">analogWrite</span>(speedPin_M2, <span class="number">0</span>);
+}
+
+<span class="keyword">void</span> <span class="builtin">loop</span>() {
+  myservo.<span class="builtin">write</span>(<span class="number">90</span>);
+  <span class="type">int</span> distance = MeasureDistance();
   
-  myservo.attach(<span class="code-number">9</span>);
-  myservo.write(<span class="code-number">90</span>); <span class="code-comment">// Centré</span>
-  Serial.println(<span class="code-string">"Robot Pret !"</span>);
-  delay(<span class="code-number">1000</span>);
-}
-
-<span class="code-type">void</span> <span class="code-keyword">loop</span>() {
-  <span class="code-type">int</span> dist = MeasureDistance();
-  Serial.print(<span class="code-string">"Dist: "</span>); Serial.println(dist);
-
-  <span class="code-comment">// Seuil de détection réduit à 20cm pour éviter les détections fantômes</span>
-  <span class="code-keyword">if</span> (dist &gt; <span class="code-number">0</span> && dist &lt;= <span class="code-number">20</span>) {
-    Serial.println(<span class="code-string">"Obstacle !"</span>);
-    carStop(); delay(<span class="code-number">300</span>);
-    
-    <span class="code-comment">// Recul de dégagement</span>
-    carBack(<span class="code-number">150</span>, <span class="code-number">150</span>); delay(<span class="code-number">500</span>); 
-    carStop(); delay(<span class="code-number">300</span>);
-    
-    <span class="code-comment">// Analyse des côtés</span>
-    myservo.write(<span class="code-number">30</span>); delay(<span class="code-number">600</span>);
-    <span class="code-type">int</span> dL = MeasureDistance();
-    
-    myservo.write(<span class="code-number">150</span>); delay(<span class="code-number">600</span>);
-    <span class="code-type">int</span> dR = MeasureDistance();
-    
-    myservo.write(<span class="code-number">90</span>); delay(<span class="code-number">400</span>);
-
-    <span class="code-comment">// Virage</span>
-    <span class="code-keyword">if</span> (dL &gt; dR) {
-      carTurnLeft(<span class="code-number">200</span>, <span class="code-number">200</span>);
-    } <span class="code-keyword">else</span> {
-      carTurnRight(<span class="code-number">200</span>, <span class="code-number">200</span>);
-    }
-    delay(<span class="code-number">350</span>); 
+  <span class="keyword">if</span> (distance &gt; <span class="number">20</span>) {
+    carAdvance(<span class="number">150</span>, <span class="number">150</span>);
+    <span class="builtin">delay</span>(<span class="number">50</span>);
+  } <span class="keyword">else</span> {
     carStop();
+    <span class="builtin">delay</span>(<span class="number">400</span>);
     
-    <span class="code-comment">// FORCER L'AVANCÉE pour sortir de la zone de détection</span>
-    carAdvance(<span class="code-number">150</span>, <span class="code-number">150</span>);
-    delay(<span class="code-number">600</span>);
+    <span class="comment">// Scan Droite (30°)</span>
+    myservo.<span class="builtin">write</span>(<span class="number">30</span>);
+    <span class="builtin">delay</span>(<span class="number">600</span>);
+    <span class="type">int</span> dR = MeasureDistance();
     
-  } <span class="code-keyword">else</span> {
-    carAdvance(<span class="code-number">130</span>, <span class="code-number">130</span>);
+    <span class="comment">// Scan Gauche (150°)</span>
+    myservo.<span class="builtin">write</span>(<span class="number">150</span>);
+    <span class="builtin">delay</span>(<span class="number">600</span>);
+    <span class="type">int</span> dL = MeasureDistance();
+    
+    myservo.<span class="builtin">write</span>(<span class="number">90</span>);
+    <span class="builtin">delay</span>(<span class="number">400</span>);
+    
+    <span class="comment">// Prise de décision</span>
+    <span class="keyword">if</span> (dL &gt; dR) {
+      carTurnLeft(<span class="number">200</span>, <span class="number">200</span>);
+      <span class="builtin">delay</span>(<span class="number">450</span>);
+    } <span class="keyword">else</span> {
+      carTurnRight(<span class="number">200</span>, <span class="number">200</span>);
+      <span class="builtin">delay</span>(<span class="number">450</span>);
+    }
+    carStop();
+    <span class="builtin">delay</span>(<span class="number">200</span>);
+    
+    <span class="comment">// Forçage d'extraction</span>
+    carAdvance(<span class="number">150</span>, <span class="number">150</span>);
+    <span class="builtin">delay</span>(<span class="number">600</span>);
   }
-}
-
-<span class="code-comment">// --- FONCTIONS MOTEURS ---</span>
-<span class="code-type">void</span> carStop() { analogWrite(speedPin_M1, <span class="code-number">0</span>); analogWrite(speedPin_M2, <span class="code-number">0</span>); }
-<span class="code-type">void</span> carAdvance(<span class="code-type">int</span> s1, <span class="code-type">int</span> s2) {
-  digitalWrite(directionPin_M1, LOW); digitalWrite(directionPin_M2, LOW);
-  analogWrite(speedPin_M1, s1); analogWrite(speedPin_M2, s2);
-}
-<span class="code-type">void</span> carBack(<span class="code-type">int</span> s1, <span class="code-type">int</span> s2) {
-  digitalWrite(directionPin_M1, HIGH); digitalWrite(directionPin_M2, HIGH);
-  analogWrite(speedPin_M1, s1); analogWrite(speedPin_M2, s2);
-}
-<span class="code-type">void</span> carTurnLeft(<span class="code-type">int</span> s1, <span class="code-type">int</span> s2) {
-  digitalWrite(directionPin_M1, HIGH); digitalWrite(directionPin_M2, LOW);
-  analogWrite(speedPin_M1, s1); analogWrite(speedPin_M2, s2);
-}
-<span class="code-type">void</span> carTurnRight(<span class="code-type">int</span> s1, <span class="code-type">int</span> s2) {
-  digitalWrite(directionPin_M1, LOW); digitalWrite(directionPin_M2, HIGH);
-  analogWrite(speedPin_M1, s1); analogWrite(speedPin_M2, s2);
-}
-
-<span class="code-comment">// --- FONCTION CAPTEUR ---</span>
-<span class="code-type">int</span> MeasureDistance() {
-  digitalWrite(URTRIG, LOW); digitalWrite(URTRIG, HIGH);
-  <span class="code-type">unsigned long</span> duration = pulseIn(URPWM, LOW, <span class="code-number">50000</span>);
-  <span class="code-keyword">if</span> (duration == <span class="code-number">0</span>) <span class="code-keyword">return</span> <span class="code-number">999</span>;
-  <span class="code-keyword">return</span> duration / <span class="code-number">50</span>;
 }</pre>
                 </div>
-            </section>
-        </main>
+            </div>
 
-        <footer>
-            <p>© 2026 • Documentation Technique de Projet L2</p>
-        </footer>
+            <a href="labyrinthe.html" class="btn-back">⬅ Revenir à la Partie 1</a>
+        </main>
     </div>
 
 </body>
