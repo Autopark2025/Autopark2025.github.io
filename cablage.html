@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Électronique & Câblage | Projet Robot</title>
+    <title>Partie 1 : Câblage & Électronique</title>
     <style>
         :root {
             --bg-dark: #0a0a14;
@@ -31,100 +31,99 @@
             padding: 40px 20px;
         }
 
-        /* Barre de Navigation */
-        nav {
+        /* Fil d'Ariane / Navigation interne */
+        .breadcrumb {
             display: flex;
-            justify-content: center;
-            gap: 20px;
-            padding: 15px;
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 30px;
-            margin-bottom: 40px;
+            gap: 10px;
+            margin-bottom: 30px;
+            font-size: 0.95rem;
         }
 
-        nav a {
+        .breadcrumb a {
             color: var(--text-muted);
             text-decoration: none;
-            font-weight: bold;
-            font-size: 0.95rem;
-            transition: color 0.3s;
+            transition: color 0.2s;
         }
 
-        nav a:hover, nav a.active {
+        .breadcrumb a:hover {
             color: var(--accent-cyan);
         }
 
-        header {
-            text-align: center;
-            padding: 20px 0;
+        .breadcrumb span {
+            color: var(--border-color);
+        }
+
+        .breadcrumb .current {
+            color: var(--accent-cyan);
+            font-weight: bold;
         }
 
         header h1 {
-            font-size: 2.3rem;
+            font-size: 2.2rem;
+            margin: 0 0 10px 0;
             color: #fff;
-            margin: 0;
         }
 
         header p {
-            color: var(--accent-cyan);
+            color: var(--text-muted);
             font-size: 1.1rem;
-            margin-top: 5px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            margin-bottom: 40px;
         }
 
-        .section-title {
+        .section-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .section-card h2 {
+            margin-top: 0;
+            color: #fff;
             font-size: 1.5rem;
-            color: var(--text-main);
-            margin-top: 40px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
             margin-bottom: 20px;
         }
 
-        /* Style du Tableau */
-        .table-container {
-            overflow-x: auto;
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            margin-top: 20px;
-        }
-
+        /* Style du Tableau technique */
         table {
             width: 100%;
             border-collapse: collapse;
-            text-align: left;
-        }
-
-        th, td {
-            padding: 15px;
-            border-bottom: 1px solid var(--border-color);
+            margin-top: 15px;
         }
 
         th {
-            background-color: rgba(0, 119, 255, 0.1);
+            background-color: #161633;
             color: var(--accent-cyan);
+            text-align: left;
+            padding: 14px;
             font-weight: bold;
-            text-transform: uppercase;
-            font-size: 0.85rem;
-            letter-spacing: 1px;
+            border-bottom: 2px solid var(--border-color);
         }
 
         td {
-            color: var(--text-muted);
-            font-size: 0.95rem;
+            padding: 12px 14px;
+            border-bottom: 1px solid var(--border-color);
+            color: #e2e4f0;
         }
 
-        td strong {
-            color: #fff;
+        tr:hover td {
+            background-color: rgba(255, 255, 255, 0.02);
         }
 
-        /* Affichage de l'image */
+        .pin-badge {
+            background-color: rgba(0, 119, 255, 0.2);
+            color: #3399ff;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-weight: bold;
+        }
+
+        /* Zone d'image du schéma */
         .image-container {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 20px;
             text-align: center;
             margin-top: 20px;
         }
@@ -132,105 +131,113 @@
         .image-container img {
             max-width: 100%;
             height: auto;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
         }
 
         .btn-next {
             display: inline-block;
-            margin-top: 40px;
+            margin-top: 10px;
             padding: 12px 24px;
             background: linear-gradient(45deg, var(--accent-blue), #0052cc);
             color: white;
             text-decoration: none;
             border-radius: 8px;
             font-weight: bold;
-            transition: opacity 0.3s;
+            float: right;
+            transition: opacity 0.2s;
         }
 
         .btn-next:hover {
             opacity: 0.9;
-        }
-
-        footer {
-            text-align: center;
-            margin-top: 80px;
-            padding-top: 30px;
-            border-top: 1px solid var(--border-color);
-            color: var(--text-muted);
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <nav>
+        <div class="breadcrumb">
             <a href="index.html">🧭 Accueil</a>
-            <a href="cablage.html" class="active">🔌 Électronique & Câblage</a>
-            <a href="code.html">💻 Code & Algorithme</a>
-        </nav>
+            <span>/</span>
+            <a href="labyrinthe.html">🤖 Partie 1 : Labyrinthe</a>
+            <span>/</span>
+            <span class="current">🔌 Électronique & Câblage</span>
+        </div>
 
         <header>
             <h1>Architecture Électronique</h1>
-            <p>Cartographie des entrées/sorties & Schéma Fritzing</p>
+            <p>Cartographie des connexions matérielles de la phase d'évitement d'obstacles.</p>
         </header>
 
         <main>
-            <section>
-                <h2 class="section-title">📊 Tableau des Connexions (Pins Arduino)</h2>
-                <div class="table-container">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Composant</th>
-                                <th>Fonction / Broche Arduino</th>
-                                <th>Type de Pin</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>Moteur 1 (M1)</strong></td>
-                                <td>Vitesse (speedPin_M1) : <strong>Pin 5</strong><br>Direction (directionPin_M1) : <strong>Pin 4</strong></td>
-                                <td>PWM<br>Numérique</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Moteur 2 (M2)</strong></td>
-                                <td>Vitesse (speedPin_M2) : <strong>Pin 6</strong><br>Direction (directionPin_M2) : <strong>Pin 7</strong></td>
-                                <td>PWM<br>Numérique</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Servomoteur</strong></td>
-                                <td>Signal de commande : <strong>Pin 9</strong></td>
-                                <td>Servo</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Capteur Ultrasons (URM37)</strong></td>
-                                <td>Écho (URPWM) : <strong>Pin 3</strong><br>Déclencheur (URTRIG) : <strong>Pin 10</strong></td>
-                                <td>Entrée Numérique<br>Sortie Numérique</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-
-            <section>
-                <h2 class="section-title">🗺️ Schéma de Câblage Détaillé</h2>
-                <p style="color: var(--text-muted); line-height: 1.5;">
-                    Le schéma ci-dessous représente les connexions du servomoteur et du capteur à ultrasons <strong>DFRobot URM37 V3.2</strong> sur la carte mère principale <strong>RoMeo BLE V1.0</strong>.
-                </p>
-                <div class="image-container">
-                    <img src="robot_cablage.png.PNG" alt="Schéma Fritzing du Robot Cherokey 4WD">
-                </div>
-            </section>
-
-            <div style="text-align: right;">
-                <a href="code.html" class="btn-next">Passer à l'Algorithme & Code ➔</a>
+            <div class="section-card">
+                <h2>Tableau des Connexions (Pins)</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Composant Matériel</th>
+                            <th>Broche Arduino (Pin)</th>
+                            <th>Type de Signal</th>
+                            <th>Description / Rôle</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Servo-Moteur</strong></td>
+                            <td><span class="pin-badge">D9</span></td>
+                            <td>Sortie (PWM)</td>
+                            <td>Gestion de l'orientation du capteur à ultrason.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Capteur URM37 (Trig)</strong></td>
+                            <td><span class="pin-badge">D10</span></td>
+                            <td>Sortie Digitale</td>
+                            <td>Déclenchement (Trigger) de l'impulsion ultrasonore.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Capteur URM37 (Echo)</strong></td>
+                            <td><span class="pin-badge">D3</span></td>
+                            <td>Entrée (PWM)</td>
+                            <td>Lecture de la largeur d'impulsion pour évaluer la distance.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Moteur Droit (Vitesse)</strong></td>
+                            <td><span class="pin-badge">D5</span></td>
+                            <td>Sortie (PWM)</td>
+                            <td>Contrôle de la vitesse du groupe de moteurs droits.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Moteur Droit (Direction)</strong></td>
+                            <td><span class="pin-badge">D4</span></td>
+                            <td>Sortie Digitale</td>
+                            <td>Sens de rotation (Avant/Arrière) moteurs droits.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Moteur Gauche (Vitesse)</strong></td>
+                            <td><span class="pin-badge">D6</span></td>
+                            <td>Sortie (PWM)</td>
+                            <td>Contrôle de la vitesse du groupe de moteurs gauches.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Moteur Gauche (Direction)</strong></td>
+                            <td><span class="pin-badge">D7</span></td>
+                            <td>Sortie Digitale</td>
+                            <td>Sens de rotation (Avant/Arrière) moteurs gauches.</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-        </main>
 
-        <footer>
-            <p>© 2026 • Documentation Technique de Projet L2</p>
-        </footer>
+            <div class="section-card">
+                <h2>Schéma de Câblage Fritzing</h2>
+                <div class="image-container">
+                    <img src="robot_cablage.png.PNG" alt="Schéma Fritzing complet de l'électronique du robot">
+                </div>
+            </div>
+
+            <a href="code.html" class="btn-next">Passer à l'Algorithme & Code ➔</a>
+        </main>
     </div>
 
 </body>
