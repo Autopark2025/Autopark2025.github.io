@@ -3,15 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mon Portfolio | Électronique & Robotique</title>
+    <title>Accueil | Projet Robot L2</title>
     <style>
         :root {
-            --bg-dark: #07070c;
-            --card-bg: #11111f;
+            --bg-dark: #0a0a14;
+            --card-bg: #111126;
             --accent-cyan: #00ffcc;
             --accent-blue: #0077ff;
             --text-main: #ffffff;
             --text-muted: #8b8da9;
+            --border-color: #1f1f3e;
         }
 
         body {
@@ -25,147 +26,126 @@
         }
 
         .container {
-            max-width: 900px;
+            max-width: 950px;
             width: 100%;
             padding: 40px 20px;
         }
 
-        /* En-tête du site */
+        /* Barre de Navigation */
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 15px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 30px;
+            margin-bottom: 40px;
+        }
+
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--accent-cyan);
+        }
+
         header {
             text-align: center;
-            padding: 60px 0;
-            border-bottom: 1px solid #1f1f3e;
+            padding: 40px 0;
+            border-bottom: 1px solid var(--border-color);
         }
 
         header h1 {
-            font-size: 3rem;
+            font-size: 2.8rem;
             margin: 0;
             background: linear-gradient(45deg, var(--accent-cyan), var(--accent-blue));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
         }
 
         header p {
             color: var(--text-muted);
             font-size: 1.2rem;
-            margin-top: 10px;
-            letter-spacing: 1px;
+            margin-top: 15px;
         }
 
-        /* Titre des rubriques */
         .section-title {
-            font-size: 1.6rem;
+            font-size: 1.8rem;
             color: var(--accent-cyan);
             margin-top: 50px;
+            border-left: 4px solid var(--accent-blue);
+            padding-left: 15px;
             text-transform: uppercase;
-            letter-spacing: 2px;
         }
 
-        /* Grille des projets */
-        .grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 25px;
-            margin-top: 20px;
-        }
-
-        @media(min-width: 768px) {
-            .grid { grid-template-columns: 1fr 1fr; }
-        }
-
-        .card {
-            background-color: var(--card-bg);
-            border: 1px solid #1f1f3e;
-            border-radius: 12px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent-cyan);
-            box-shadow: 0 10px 20px rgba(0, 255, 204, 0.1);
-        }
-
-        .card-content {
-            padding: 25px;
-        }
-
-        .card h3 {
-            margin: 0 0 10px 0;
-            font-size: 1.3rem;
-        }
-
-        .card p {
+        .intro-text {
             color: var(--text-muted);
-            font-size: 0.95rem;
-            line-height: 1.5;
-            margin-bottom: 15px;
+            font-size: 1.1rem;
+            line-height: 1.6;
         }
 
-        .tags {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .tag {
-            background: rgba(0, 255, 204, 0.1);
-            color: var(--accent-cyan);
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.8rem;
+        .btn-next {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 12px 24px;
+            background: linear-gradient(45deg, var(--accent-blue), #0052cc);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
             font-weight: bold;
+            transition: opacity 0.3s;
+        }
+
+        .btn-next:hover {
+            opacity: 0.9;
         }
 
         footer {
             text-align: center;
-            margin-top: 80px;
+            margin-top: 100px;
+            padding-top: 30px;
+            border-top: 1px solid var(--border-color);
             color: var(--text-muted);
-            font-size: 0.9rem;
         }
     </style>
 </head>
 <body>
 
     <div class="container">
+        <nav>
+            <a href="index.html" class="active">🧭 Accueil</a>
+            <a href="cablage.html">🔌 Électronique & Câblage</a>
+            <a href="code.html">💻 Code & Algorithme</a>
+        </nav>
+
         <header>
-            <h1>Électronique & Robotique</h1>
-            <p>Conception • Microcontrôleurs • Systèmes Embarqués</p>
+            <h1>Robot Autonome Cherokey 4WD</h1>
+            <p>Projet d'ingénierie et de systèmes embarqués — Licence 2</p>
         </header>
 
         <main>
-            <h2 class="section-title">🚀 Mes Projets</h2>
-            
-            <div class="grid">
-                <div class="card">
-                    <div class="card-content">
-                        <h3>🤖 Robot Autonome (Cherokey 4WD)</h3>
-                        <p>Algorithme d'évitement d'obstacles et résolution de labyrinthe à l'aide d'un capteur ultrason monté sur servomoteur.</p>
-                        <div class="tags">
-                            <span class="tag">Arduino</span>
-                            <span class="tag">C++</span>
-                            <span class="tag">Hardware</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-content">
-                        <h3>📟 Programmation Bas Niveau</h3>
-                        <p>Contrôle de registres, gestion d'affichage LED et moteurs codés en assembleur AVR pour ATmega2560.</p>
-                        <div class="tags">
-                            <span class="tag">Assembleur</span>
-                            <span class="tag">AVR</span>
-                            <span class="tag">ATmega2560</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <section>
+                <h2 class="section-title">🎯 Objectif du Projet</h2>
+                <p class="intro-text">
+                    Le but de ce projet est de concevoir un robot mobile capable de résoudre un labyrinthe de manière totalement autonome. À l'aide de ses moteurs et d'un capteur à ultrasons monté sur servomoteur, il doit scanner son environnement en temps réel pour éviter les murs et trouver la sortie.
+                </p>
+                <p class="intro-text">
+                    Ce portfolio technique détaille toute l'architecture électronique, la connectique de la carte Romeo BLE, ainsi que les algorithmes de navigation développés pour mener à bien cette mission.
+                </p>
+                
+                <a href="cablage.html" class="btn-next">Voir le Schéma Électronique ➔</a>
+            </section>
         </main>
 
         <footer>
-            <p>© 2026 • Réalisé sur GitHub Pages</p>
+            <p>© 2026 • Documentation Projet L2</p>
         </footer>
     </div>
 
