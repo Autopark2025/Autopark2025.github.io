@@ -122,6 +122,7 @@
         .code-type { color: #8be9fd; }
         .code-comment { color: #6272a4; font-style: italic; }
         .code-number { color: #bd93f9; }
+        .code-string { color: #f1fa8c; }
 
         footer {
             text-align: center;
@@ -158,26 +159,120 @@
             </section>
 
             <section>
-                <h2 class="section-title">💾 Code Source de Contrôle (Structure Globale)</h2>
+                <h2 class="section-title">💾 Code Source Arduino Complet</h2>
                 <div class="code-block">
-                    <pre><span class="code-comment">// Configuration des broches pour la carte Romeo BLE du Cherokey 4WD</span>
-<span class="code-keyword">#define</span> speedPin_M1 <span class="code-number">5</span>
-<span class="code-keyword">#define</span> directionPin_M1 <span class="code-number">4</span>
-<span class="code-keyword">#define</span> speedPin_M2 <span class="code-number">6</span>
-<span class="code-keyword">#define</span> directionPin_M2 <span class="code-number">7</span>
+                    <pre><span class="code-comment">/*
+ * Code de pilotage du Robot Cherokey 4WD avec évitement d'obstacles
+ * Carte mère : RoMeo BLE V1.0 / Capteur : URM37 V3.2 / Servomoteur sur Pin 9
+ */</span>
+
+<span class="code-keyword">#include</span> <span class="code-string">&lt;Servo.h&gt;</span>
+
+<span class="code-comment">// Attribution des pins pour la commande des moteurs</span>
+<span class="code-keyword">#define</span> speedPin_M1 <span class="code-number">5</span>        <span class="code-comment">// Vitesse Moteur Gauche (PWM)</span>
+<span class="code-keyword">#define</span> directionPin_M1 <span class="code-number">4</span>    <span class="code-comment">// Direction Moteur Gauche</span>
+<span class="code-keyword">#define</span> speedPin_M2 <span class="code-number">6</span>        <span class="code-comment">// Vitesse Moteur Droit (PWM)</span>
+<span class="code-keyword">#define</span> directionPin_M2 <span class="code-number">7</span>    <span class="code-comment">// Direction Moteur Droit</span>
+
+<span class="code-comment">// Attribution des pins pour le capteur ultrason URM37</span>
+<span class="code-keyword">#define</span> URPWM <span class="code-number">3</span>              <span class="code-comment">// Broche Echo (Mesure de la largeur d'impulsion)</span>
+<span class="code-keyword">#define</span> URTRIG <span class="code-number">10</span>            <span class="code-comment">// Broche Trigger (Déclenchement du capteur)</span>
+
+Servo myservo;               <span class="code-comment">// Création de l'objet pour piloter le servomoteur</span>
+<span class="code-type">int</span> distanceSeuil = <span class="code-number">25</span>;      <span class="code-comment">// Seuil de détection d'obstacle en centimètres</span>
 
 <span class="code-type">void</span> <span class="code-keyword">setup</span>() {
-    <span class="code-comment">// Configuration des pins de commande des moteurs en sortie</span>
+    <span class="code-comment">// Configuration des broches moteurs en sortie</span>
     pinMode(speedPin_M1, OUTPUT);
     pinMode(directionPin_M1, OUTPUT);
     pinMode(speedPin_M2, OUTPUT);
     pinMode(directionPin_M2, OUTPUT);
     
+    <span class="code-comment">// Configuration des broches du capteur URM37</span>
+    pinMode(URTRIG, OUTPUT);
+    digitalWrite(URTRIG, HIGH); <span class="code-comment">// Initialisation à l'état haut</span>
+    pinMode(URPWM, INPUT);
+    
+    myservo.attach(<span class="code-number">9</span>);         <span class="code-comment">// Associe le servomoteur à la pin numérique 9</span>
+    myservo.write(<span class="code-number">90</span>);        <span class="code-comment">// Aligne le capteur droit devant (90 degrés)</span>
+    
     Serial.begin(<span class="code-number">9600</span>);
+    delay(<span class="code-number">1000</span>);
 }
 
 <span class="code-type">void</span> <span class="code-keyword">loop</span>() {
-    <span class="code-comment">// La boucle principale de traitement et d'évitement viendra s'insérer ici</span>
+    <span class="code-type">int</span> distanceFace = calculerDistance();
+    
+    <span class="code-keyword">if</span> (distanceFace &gt; <span class="code-number">0</span> && distanceFace &lt;= distanceSeuil) {
+        arreterLeRobot();
+        delay(<span class="code-number">500</span>);
+        analyserEnvironnement();
+    } <span class="code-keyword">else</span> {
+        avancerEnLigneDroite();
+    }
+    delay(<span class="code-number">60</span>);
+}
+
+<span class="code-comment">// Fonction permettant de calculer la distance via le capteur URM37</span>
+<span class="code-type">int</span> calculerDistance() {
+    digitalWrite(URTRIG, LOW);
+    digitalWrite(URTRIG, HIGH);
+    
+    <span class="code-type">unsigned long</span> dureeImpulsion = pulseIn(URPWM, LOW, <span class="code-number">25000</span>);
+    <span class="code-type">int</span> distanceCm = dureeImpulsion / <span class="code-number">50</span>; <span class="code-comment">// Conversion de la largeur d'impulsion en cm</span>
+    
+    <span class="code-keyword">if</span> (distanceCm == <span class="code-number">0</span>) <span class="code-keyword">return</span> <span class="code-number">999</span>;   <span class="code-comment">// Pas d'obstacle à portée</span>
+    <span class="code-keyword">return</span> distanceCm;
+}
+
+<span class="code-type">void</span> avancerEnLigneDroite() {
+    digitalWrite(directionPin_M1, HIGH);
+    analogWrite(speedPin_M1, <span class="code-number">150</span>); <span class="code-comment">// Vitesse modérée</span>
+    digitalWrite(directionPin_M2, HIGH);
+    analogWrite(speedPin_M2, <span class="code-number">150</span>);
+}
+
+<span class="code-type">void</span> arreterLeRobot() {
+    analogWrite(speedPin_M1, <span class="code-number">0</span>);
+    analogWrite(speedPin_M2, <span class="code-number">0</span>);
+}
+
+<span class="code-type">void</span> pivoterAGauche() {
+    digitalWrite(directionPin_M1, LOW);  <span class="code-comment">// Recule à gauche</span>
+    analogWrite(speedPin_M1, <span class="code-number">180</span>);
+    digitalWrite(directionPin_M2, HIGH); <span class="code-comment">// Avance à droite</span>
+    analogWrite(speedPin_M2, <span class="code-number">180</span>);
+    delay(<span class="code-number">600</span>);                         <span class="code-comment">// Durée du pivot</span>
+    arreterLeRobot();
+}
+
+<span class="code-type">void</span> pivoterADroite() {
+    digitalWrite(directionPin_M1, HIGH); <span class="code-comment">// Avance à gauche</span>
+    analogWrite(speedPin_M1, <span class="code-number">180</span>);
+    digitalWrite(directionPin_M2, LOW);  <span class="code-comment">// Recule à droite</span>
+    analogWrite(speedPin_M2, <span class="code-number">180</span>);
+    delay(<span class="code-number">600</span>);
+    arreterLeRobot();
+}
+
+<span class="code-comment">// Processus d'analyse à gauche et à droite pour choisir la meilleure voie</span>
+<span class="code-type">void</span> analyserEnvironnement() {
+    myservo.write(<span class="code-number">20</span>);  <span class="code-comment">// Regarde à droite</span>
+    delay(<span class="code-number">600</span>);
+    <span class="code-type">int</span> distanceDroite = calculerDistance();
+    
+    myservo.write(<span class="code-number">160</span>); <span class="code-comment">// Regarde à gauche</span>
+    delay(<span class="code-number">800</span>);
+    <span class="code-type">int</span> distanceGauche = calculerDistance();
+    
+    myservo.write(<span class="code-number">90</span>);  <span class="code-comment">// Repositionne au centre</span>
+    delay(<span class="code-number">500</span>);
+    
+    <span class="code-keyword">if</span> (distanceGauche &gt; distanceDroite) {
+        pivoterAGauche();
+    } <span class="code-keyword">else</span> {
+        pivoterADroite();
+    }
 }</pre>
                 </div>
             </section>
