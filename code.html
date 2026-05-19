@@ -107,13 +107,18 @@
             border-radius: 12px;
             padding: 20px;
             overflow-x: auto;
-            font-family: 'Consolas', 'Courier New', Courier, monospace;
-            font-size: 0.9rem;
-            color: #e0e0e0;
-            line-height: 1.5;
         }
 
-        .code-keyword { color: #ff79c6; }
+        .code-block pre {
+            margin: 0;
+            font-family: 'Consolas', 'Courier New', Courier, monospace;
+            font-size: 0.92rem;
+            color: #e0e0e0;
+            line-height: 1.6;
+            white-space: pre;
+        }
+
+        .code-keyword { color: #ff79c6; font-weight: bold; }
         .code-type { color: #8be9fd; }
         .code-comment { color: #6272a4; font-style: italic; }
         .code-number { color: #bd93f9; }
@@ -155,7 +160,7 @@
             <section>
                 <h2 class="section-title">💾 Code Source de Contrôle (Structure Globale)</h2>
                 <div class="code-block">
-<span class="code-comment">// Configuration des broches pour la carte Romeo BLE du Cherokey 4WD</span>
+                    <pre><span class="code-comment">// Configuration des broches pour la carte Romeo BLE du Cherokey 4WD</span>
 <span class="code-keyword">#define</span> speedPin_M1 <span class="code-number">5</span>
 <span class="code-keyword">#define</span> directionPin_M1 <span class="code-number">4</span>
 <span class="code-keyword">#define</span> speedPin_M2 <span class="code-number">6</span>
@@ -173,7 +178,7 @@
 
 <span class="code-type">void</span> <span class="code-keyword">loop</span>() {
     <span class="code-comment">// La boucle principale de traitement et d'évitement viendra s'insérer ici</span>
-}
+}</pre>
                 </div>
             </section>
         </main>
