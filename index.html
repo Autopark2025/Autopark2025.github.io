@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accueil | Projet Robot L2</title>
+    <title>Mon Portfolio | Projet Robot L2</title>
     <style>
         :root {
             --bg-dark: #0a0a14;
@@ -57,59 +57,98 @@
 
         header {
             text-align: center;
-            padding: 40px 0;
-            border-bottom: 1px solid var(--border-color);
+            padding: 40px 0 20px 0;
         }
 
         header h1 {
             font-size: 2.8rem;
+            color: #fff;
             margin: 0;
-            background: linear-gradient(45deg, var(--accent-cyan), var(--accent-blue));
+            background: linear-gradient(45deg, #fff, var(--text-muted));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-transform: uppercase;
         }
 
         header p {
-            color: var(--text-muted);
-            font-size: 1.2rem;
-            margin-top: 15px;
-        }
-
-        .section-title {
-            font-size: 1.8rem;
             color: var(--accent-cyan);
-            margin-top: 50px;
-            border-left: 4px solid var(--accent-blue);
-            padding-left: 15px;
+            font-size: 1.2rem;
+            margin-top: 10px;
             text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
-        .intro-text {
+        .hero-section {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 30px;
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }
+
+        @media (min-width: 768px) {
+            .hero-section {
+                flex-direction: row-reverse; /* Photo à droite sur grand écran */
+                text-align: left;
+            }
+            .hero-text {
+                flex: 1.2; /* Un peu plus d'espace pour le texte */
+            }
+            .hero-image {
+                flex: 1;
+            }
+        }
+
+        .hero-text h2 {
+            font-size: 1.8rem;
+            margin-top: 0;
+            color: #fff;
+        }
+
+        .hero-text p {
             color: var(--text-muted);
-            font-size: 1.1rem;
             line-height: 1.6;
+            font-size: 1.05rem;
         }
 
-        .btn-next {
+        /* Style de la Photo du Robot */
+        .hero-image {
+            text-align: center;
+            width: 100%;
+        }
+
+        .hero-image img {
+            max-width: 100%;
+            max-height: 400px; /* Légèrement plus grande */
+            object-fit: cover;
+            border-radius: 12px;
+            border: 2px solid var(--border-color);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+        }
+
+        .btn-start {
             display: inline-block;
-            margin-top: 30px;
-            padding: 12px 24px;
+            margin-top: 20px;
+            padding: 14px 28px;
             background: linear-gradient(45deg, var(--accent-blue), #0052cc);
             color: white;
             text-decoration: none;
             border-radius: 8px;
             font-weight: bold;
-            transition: opacity 0.3s;
+            transition: transform 0.2s, opacity 0.3s;
         }
 
-        .btn-next:hover {
+        .btn-start:hover {
             opacity: 0.9;
+            transform: translateY(-2px);
         }
 
         footer {
             text-align: center;
-            margin-top: 100px;
+            margin-top: 80px;
             padding-top: 30px;
             border-top: 1px solid var(--border-color);
             color: var(--text-muted);
@@ -126,26 +165,32 @@
         </nav>
 
         <header>
-            <h1>Robot Autonome Cherokey 4WD</h1>
-            <p>Projet d'ingénierie et de systèmes embarqués — Licence 2</p>
+            <h1>Portfolio Technique</h1>
+            <p>Projet Robot Mobile Autonome</p>
         </header>
 
         <main>
-            <section>
-                <h2 class="section-title">🎯 Objectif du Projet</h2>
-                <p class="intro-text">
-                    Le but de ce projet est de concevoir un robot mobile capable de résoudre un labyrinthe de manière totalement autonome. À l'aide de ses moteurs et d'un capteur à ultrasons monté sur servomoteur, il doit scanner son environnement en temps réel pour éviter les murs et trouver la sortie.
-                </p>
-                <p class="intro-text">
-                    Ce portfolio technique détaille toute l'architecture électronique, la connectique de la carte Romeo BLE, ainsi que les algorithmes de navigation développés pour mener à bien cette mission.
-                </p>
-                
-                <a href="cablage.html" class="btn-next">Voir le Schéma Électronique ➔</a>
-            </section>
+            <div class="hero-section">
+                <div class="hero-image">
+                    <img src="Robot.jpeg" alt="Photo réelle du Robot Cherokey 4WD">
+                </div>
+
+                <div class="hero-text">
+                    <h2>Bienvenue sur mon projet de L2</h2>
+                    <p>
+                        Ce portfolio présente les travaux réalisés sur notre plateforme de robot mobile 4WD, visible ci-contre. 
+                        L'objectif principal est de concevoir un système embarqué capable de naviguer de manière autonome en évitant les obstacles en temps réel.
+                    </p>
+                    <p>
+                        À travers les différents onglets, vous découvrirez la cartographie complète de notre architecture électronique, le câblage de nos capteurs ultrasoniques, ainsi que l'algorithme d'évitement développé sous environnement Arduino.
+                    </p>
+                    <a href="cablage.html" class="btn-start">Découvrir le projet ➔</a>
+                </div>
+            </div>
         </main>
 
         <footer>
-            <p>© 2026 • Documentation Projet L2</p>
+            <p>© 2026 • Documentation Technique de Projet L2</p>
         </footer>
     </div>
 
