@@ -10,8 +10,27 @@
             --accent: #00f2ff;
             --text: #e0e0e0;
         }
-        body { margin: 0; background-color: var(--dark); color: var(--text); font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        body { margin: 0; background-color: var(--dark); color: var(--text); font-family: 'Inter', sans-serif; overflow-x: hidden; position: relative; }
         
+        /* La ligne de scanner */
+        .scanner-line {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--accent);
+            box-shadow: 0 0 15px var(--accent);
+            z-index: 9999;
+            pointer-events: none;
+            animation: scan 4s linear infinite alternate;
+        }
+
+        @keyframes scan {
+            0% { top: 0%; }
+            100% { top: 100%; }
+        }
+
         /* En-tête percutant */
         header { padding: 80px 20px; text-align: center; }
         h1 { font-size: 3.5rem; margin: 0; letter-spacing: -1px; text-transform: uppercase; background: linear-gradient(to right, #fff, var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
@@ -32,6 +51,8 @@
     </style>
 </head>
 <body>
+
+    <div class="scanner-line"></div>
 
     <header>
         <h1>SYSTÈME CHEROKEY 4WD</h1>
