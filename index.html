@@ -12,7 +12,7 @@
         }
         body { margin: 0; background-color: var(--dark); color: var(--text); font-family: 'Inter', sans-serif; overflow-x: hidden; position: relative; }
         
-        /* 1. Ligne horizontale (va-et-vient) */
+        /* La ligne de scanner */
         .scanner-line {
             position: fixed;
             top: 0;
@@ -31,27 +31,17 @@
             100% { top: 100%; }
         }
 
-        /* 2. Ligne verticale (fixe) */
-        .vertical-line {
-            position: fixed;
-            top: 0;
-            left: 50%; /* Positionnée au milieu de l'écran */
-            width: 1px;
-            height: 100vh;
-            background: rgba(0, 242, 255, 0.1);
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        /* Styles existants */
-        header { padding: 80px 20px; text-align: center; position: relative; z-index: 1; }
+        /* En-tête percutant */
+        header { padding: 80px 20px; text-align: center; }
         h1 { font-size: 3.5rem; margin: 0; letter-spacing: -1px; text-transform: uppercase; background: linear-gradient(to right, #fff, var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         p.subtitle { color: var(--accent); letter-spacing: 3px; margin-top: 15px; font-weight: 300; text-transform: uppercase; font-size: 1.1rem; }
 
-        .showcase { max-width: 900px; margin: -50px auto 50px; padding: 20px; position: relative; z-index: 1; }
+        /* Conteneur Robot */
+        .showcase { max-width: 900px; margin: -50px auto 50px; padding: 20px; }
         .robot-img { width: 100%; border-radius: 30px; box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 20px rgba(0,242,255,0.1); border: 1px solid #222; }
 
-        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; max-width: 1100px; margin: 0 auto 100px; padding: 20px; position: relative; z-index: 1; }
+        /* Grille des missions */
+        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; max-width: 1100px; margin: 0 auto 100px; padding: 20px; }
         .card { background: #0a0a0a; border: 1px solid #1a1a1a; padding: 40px; border-radius: 20px; transition: 0.4s; cursor: pointer; }
         .card:hover { border-color: var(--accent); transform: translateY(-10px); }
         .card h2 { margin-top: 0; color: #fff; }
@@ -63,7 +53,6 @@
 <body>
 
     <div class="scanner-line"></div>
-    <div class="vertical-line"></div>
 
     <header>
         <h1>SYSTÈME CHEROKEY 4WD</h1>
