@@ -25,50 +25,16 @@
             justify-content: center;
         }
 
-        .container {
-            max-width: 950px;
-            width: 100%;
-            padding: 40px 20px;
-        }
+        .container { max-width: 950px; width: 100%; padding: 40px 20px; }
 
-        /* Fil d'Ariane / Navigation interne */
-        .breadcrumb {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 30px;
-            font-size: 0.95rem;
-        }
+        .breadcrumb { display: flex; gap: 10px; margin-bottom: 30px; font-size: 0.95rem; }
+        .breadcrumb a { color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+        .breadcrumb a:hover { color: var(--accent-cyan); }
+        .breadcrumb span { color: var(--border-color); }
+        .breadcrumb .current { color: var(--accent-cyan); font-weight: bold; }
 
-        .breadcrumb a {
-            color: var(--text-muted);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-
-        .breadcrumb a:hover {
-            color: var(--accent-cyan);
-        }
-
-        .breadcrumb span {
-            color: var(--border-color);
-        }
-
-        .breadcrumb .current {
-            color: var(--accent-cyan);
-            font-weight: bold;
-        }
-
-        header h1 {
-            font-size: 2.2rem;
-            margin: 0 0 10px 0;
-            color: #fff;
-        }
-
-        header p {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-            margin-bottom: 40px;
-        }
+        header h1 { font-size: 2.2rem; margin: 0 0 10px 0; color: #fff; }
+        header p { color: var(--text-muted); font-size: 1.1rem; margin-bottom: 40px; }
 
         .section-card {
             background-color: var(--card-bg);
@@ -87,31 +53,9 @@
             margin-bottom: 20px;
         }
 
-        /* Style du Tableau technique */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-        }
-
-        th {
-            background-color: #161633;
-            color: var(--accent-cyan);
-            text-align: left;
-            padding: 14px;
-            font-weight: bold;
-            border-bottom: 2px solid var(--border-color);
-        }
-
-        td {
-            padding: 12px 14px;
-            border-bottom: 1px solid var(--border-color);
-            color: #e2e4f0;
-        }
-
-        tr:hover td {
-            background-color: rgba(255, 255, 255, 0.02);
-        }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th { background-color: #161633; color: var(--accent-cyan); text-align: left; padding: 14px; border-bottom: 2px solid var(--border-color); }
+        td { padding: 12px 14px; border-bottom: 1px solid var(--border-color); color: #e2e4f0; }
 
         .pin-badge {
             background-color: rgba(0, 119, 255, 0.2);
@@ -122,12 +66,7 @@
             font-weight: bold;
         }
 
-        /* Zone d'image du schéma */
-        .image-container {
-            text-align: center;
-            margin-top: 20px;
-        }
-
+        .image-container { text-align: center; margin-top: 20px; }
         .image-container img {
             max-width: 100%;
             height: auto;
@@ -147,10 +86,6 @@
             font-weight: bold;
             float: right;
             transition: opacity 0.2s;
-        }
-
-        .btn-next:hover {
-            opacity: 0.9;
         }
     </style>
 </head>
@@ -183,48 +118,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td><strong>Servo-Moteur</strong></td>
-                            <td><span class="pin-badge">D9</span></td>
-                            <td>Sortie (PWM)</td>
-                            <td>Gestion de l'orientation du capteur à ultrason.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Capteur URM37 (Trig)</strong></td>
-                            <td><span class="pin-badge">D10</span></td>
-                            <td>Sortie Digitale</td>
-                            <td>Déclenchement (Trigger) de l'impulsion ultrasonore.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Capteur URM37 (Echo)</strong></td>
-                            <td><span class="pin-badge">D3</span></td>
-                            <td>Entrée (PWM)</td>
-                            <td>Lecture de la largeur d'impulsion pour évaluer la distance.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Moteur Droit (Vitesse)</strong></td>
-                            <td><span class="pin-badge">D5</span></td>
-                            <td>Sortie (PWM)</td>
-                            <td>Contrôle de la vitesse du groupe de moteurs droits.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Moteur Droit (Direction)</strong></td>
-                            <td><span class="pin-badge">D4</span></td>
-                            <td>Sortie Digitale</td>
-                            <td>Sens de rotation (Avant/Arrière) moteurs droits.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Moteur Gauche (Vitesse)</strong></td>
-                            <td><span class="pin-badge">D6</span></td>
-                            <td>Sortie (PWM)</td>
-                            <td>Contrôle de la vitesse du groupe de moteurs gauches.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Moteur Gauche (Direction)</strong></td>
-                            <td><span class="pin-badge">D7</span></td>
-                            <td>Sortie Digitale</td>
-                            <td>Sens de rotation (Avant/Arrière) moteurs gauches.</td>
-                        </tr>
+                        <tr><td><strong>Servo-Moteur</strong></td><td><span class="pin-badge">D9</span></td><td>Sortie (PWM)</td><td>Gestion orientation ultrason.</td></tr>
+                        <tr><td><strong>Capteur URM37 (Trig)</strong></td><td><span class="pin-badge">D10</span></td><td>Sortie Digitale</td><td>Déclenchement ultrason.</td></tr>
+                        <tr><td><strong>Capteur URM37 (Echo)</strong></td><td><span class="pin-badge">D3</span></td><td>Entrée (PWM)</td><td>Lecture distance.</td></tr>
+                        <tr><td><strong>Moteur Droit (Vitesse)</strong></td><td><span class="pin-badge">D5</span></td><td>Sortie (PWM)</td><td>Vitesse moteur droit.</td></tr>
+                        <tr><td><strong>Moteur Droit (Direction)</strong></td><td><span class="pin-badge">D4</span></td><td>Sortie Digitale</td><td>Sens moteur droit.</td></tr>
+                        <tr><td><strong>Moteur Gauche (Vitesse)</strong></td><td><span class="pin-badge">D6</span></td><td>Sortie (PWM)</td><td>Vitesse moteur gauche.</td></tr>
+                        <tr><td><strong>Moteur Gauche (Direction)</strong></td><td><span class="pin-badge">D7</span></td><td>Sortie Digitale</td><td>Sens moteur gauche.</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -232,7 +132,7 @@
             <div class="section-card">
                 <h2>Schéma de Câblage Fritzing</h2>
                 <div class="image-container">
-                    <img src="robot_cablage.png.PNG" alt="Schéma Fritzing complet de l'électronique du robot">
+                    <img src="robot_cablage.png" alt="Schéma Fritzing complet de l'électronique du robot">
                 </div>
             </div>
 
