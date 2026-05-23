@@ -64,8 +64,31 @@
         .robot-img:hover { transform: scale(1.03) rotate(-1deg); }
 
         .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; max-width: 1100px; margin: 0 auto 100px; padding: 20px; position: relative; z-index: 1; }
-        .card { background: #0a0a0a; border: 1px solid #1a1a1a; padding: 40px; border-radius: 20px; transition: 0.4s; cursor: pointer; }
+        
+        /* Cartes avec effet Halo */
+        .card { 
+            background: #0a0a0a; 
+            border: 1px solid #1a1a1a; 
+            padding: 40px; 
+            border-radius: 20px; 
+            transition: 0.4s; 
+            cursor: pointer;
+            position: relative; 
+            overflow: hidden; 
+        }
         .card:hover { border-color: var(--accent); transform: translateY(-10px); }
+        
+        .card::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(200px circle at var(--x, 50%) var(--y, 50%), rgba(0, 242, 255, 0.15), transparent 80%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+        .card:hover::before { opacity: 1; }
+
         .card h2 { margin-top: 0; color: #fff; }
         .btn { display: inline-block; margin-top: 20px; padding: 12px 25px; border: 1px solid var(--accent); color: var(--accent); text-decoration: none; border-radius: 50px; transition: 0.3s; }
         .btn:hover { background: var(--accent); color: #000; }
@@ -108,6 +131,7 @@
     </section>
 
     <script>
+        // Effet Machine à écrire
         const textElement = document.getElementById('typing-text');
         const phrases = ["ROBOT AUTONOME", "GESTION LABYRINTHE", "SUIVI DE TRAJECTOIRE", "VISION EMBARQUÉE"];
         let phraseIndex = 0;
@@ -116,7 +140,6 @@
 
         function type() {
             const currentPhrase = phrases[phraseIndex];
-            
             if (isDeleting) {
                 textElement.textContent = currentPhrase.substring(0, charIndex - 1);
                 charIndex--;
@@ -124,21 +147,29 @@
                 textElement.textContent = currentPhrase.substring(0, charIndex + 1);
                 charIndex++;
             }
-
             let typeSpeed = isDeleting ? 80 : 150;
-
             if (!isDeleting && charIndex === currentPhrase.length) {
-                typeSpeed = 2000; // Pause avant d'effacer
+                typeSpeed = 2000;
                 isDeleting = true;
             } else if (isDeleting && charIndex === 0) {
                 isDeleting = false;
                 phraseIndex = (phraseIndex + 1) % phrases.length;
             }
-
-            setTimeout(type, typeSpeed); 
+            setTimeout(type, typeSpeed);
         }
-
         type();
+
+        // Effet Halo sur souris
+        const cards = document.querySelectorAll('.card');
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--x', `${x}px`);
+                card.style.setProperty('--y', `${y}px`);
+            });
+        });
     </script>
 </body>
 </html>
