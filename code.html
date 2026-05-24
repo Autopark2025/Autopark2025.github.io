@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Code Source - Mission Labyrinthe</title>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <style>
         body { 
             background: #000; color: #e0e0e0; font-family: 'Inter', sans-serif; 
             margin: 0; padding: 30px; display: flex; justify-content: center; 
         }
-        .container { width: 100%; max-width: 800px; }
+        #particles-js { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -1; }
+        .container { width: 100%; max-width: 800px; position: relative; z-index: 1; }
         .expl { color: #00f2ff; border-left: 3px solid #00f2ff; padding-left: 15px; margin-bottom: 20px; }
         
         pre { 
@@ -17,22 +19,17 @@
             border-radius: 15px; white-space: pre-wrap; word-wrap: break-word;
         }
         
-        /* Bouton Retour avec effet Halo */
         .back-btn { 
             display: inline-block; padding: 15px 30px; background: #111; 
             border: 1px solid #333; color: #fff; text-decoration: none; 
-            border-radius: 10px; transition: 0.3s; position: relative; overflow: hidden;
+            border-radius: 10px; transition: 0.3s;
         }
         .back-btn:hover { border-color: #00f2ff; }
-        .back-btn::before {
-            content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(150px circle at var(--x, 50%) var(--y, 50%), rgba(0, 242, 255, 0.2), transparent 80%);
-            opacity: 0; transition: opacity 0.3s; pointer-events: none;
-        }
-        .back-btn:hover::before { opacity: 1; }
     </style>
 </head>
 <body>
+    <div id="particles-js"></div>
+
     <div class="container">
         <div class="expl">
             <h2>Explication du fonctionnement</h2>
@@ -87,12 +84,7 @@ void carStop() { analogWrite(speedPin_M1, 0); analogWrite(speedPin_M2, 0); }
     </div>
 
     <script>
-        const btn = document.querySelector('.back-btn');
-        btn.addEventListener('mousemove', (e) => {
-            const rect = btn.getBoundingClientRect();
-            btn.style.setProperty('--x', `${e.clientX - rect.left}px`);
-            btn.style.setProperty('--y', `${e.clientY - rect.top}px`);
-        });
+        particlesJS("particles-js", {"particles":{"number":{"value":80},"color":{"value":"#00f2ff"},"shape":{"type":"edge"},"line_linked":{"enable":true,"distance":150,"color":"#00f2ff","opacity":0.4}}});
     </script>
 </body>
 </html>
