@@ -2,131 +2,96 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio | Système Cherokey 4WD</title>
-    <!-- Chargement de particles.js pour l'effet réseau -->
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <title>Code Source</title>
     <style>
-        :root {
-            --dark: #050505;
-            --accent: #00f2ff;
-            --text: #e0e0e0;
-        }
-        body { margin: 0; background-color: var(--dark); color: var(--text); font-family: 'Inter', sans-serif; overflow-x: hidden; position: relative; }
-        
-        /* Fond de particules */
-        #particles-js { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: 0; }
-
-        /* Contenu au-dessus des particules */
-        .main-content { position: relative; z-index: 1; }
-
-        .scanner-line {
-            position: fixed; top: 0; left: 0; width: 100%; height: 2px;
-            background: var(--accent); box-shadow: 0 0 15px var(--accent);
-            z-index: 9999; pointer-events: none; animation: scan 4s linear infinite alternate;
-        }
-        @keyframes scan { 0% { top: 0%; } 100% { top: 100%; } }
-
-        header { padding: 80px 20px; text-align: center; }
-        h1 { font-size: 3.5rem; margin: 0; letter-spacing: -1px; text-transform: uppercase; background: linear-gradient(to right, #fff, var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        
-        .subtitle { color: var(--accent); letter-spacing: 3px; margin-top: 15px; font-weight: 300; text-transform: uppercase; font-size: 1.5rem; }
-        #typing-text { color: var(--accent); font-weight: bold; }
-        .cursor { color: #fff; animation: blink 0.7s infinite; margin-left: 5px; }
-        @keyframes blink { 50% { opacity: 0; } }
-
-        .showcase { max-width: 900px; margin: -50px auto 50px; padding: 20px; }
-        .robot-img { 
-            width: 100%; border-radius: 30px; 
-            box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 20px rgba(0,242,255,0.1); 
-            border: 1px solid #222; transition: 0.5s;
-        }
-        .robot-img:hover { transform: scale(1.03) rotate(-1deg); }
-
-        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; max-width: 1100px; margin: 0 auto 100px; padding: 20px; }
-        
-        .card { 
-            background: #0a0a0a; border: 1px solid #1a1a1a; padding: 40px; border-radius: 20px; 
-            transition: 0.4s; cursor: pointer; position: relative; overflow: hidden; 
-        }
-        .card:hover { border-color: var(--accent); transform: translateY(-10px); }
-        .card::before {
-            content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(200px circle at var(--x, 50%) var(--y, 50%), rgba(0, 242, 255, 0.15), transparent 80%);
-            opacity: 0; transition: opacity 0.3s; pointer-events: none;
-        }
-        .card:hover::before { opacity: 1; }
-        
-        .card h2 { margin-top: 0; color: #fff; }
-        .btn { display: inline-block; margin-top: 20px; padding: 12px 25px; border: 1px solid var(--accent); color: var(--accent); text-decoration: none; border-radius: 50px; transition: 0.3s; }
-        .btn:hover { background: var(--accent); color: #000; }
+        body { background: #000; color: #00f2ff; font-family: 'Courier New', monospace; padding: 30px; }
+        pre { background: #111; padding: 20px; border: 1px solid #333; border-radius: 10px; overflow-x: auto; }
+        a { color: #fff; text-decoration: none; }
     </style>
 </head>
 <body>
+    <h2>Code Source Arduino</h2>
+    <pre>
+#include &lt;Servo.h&gt;
 
-    <div id="particles-js"></div>
-    <div class="scanner-line"></div>
+const int directionPin_M1 = 4;
+const int speedPin_M1 = 5;
+const int speedPin_M2 = 6;
+const int directionPin_M2 = 7;
+const int URTRIG = 10;
+const int URPWM = 3;
+Servo myservo;
 
-    <div class="main-content">
-        <header>
-            <h1>SYSTÈME CHEROKEY 4WD</h1>
-            <p class="subtitle"><span id="typing-text"></span><span class="cursor">|</span></p>
-        </header>
+const int speedForward = 100;
+const int speedTurn = 150;
+const int speedBack = 95;
+const int distanceSeuil = 25;
 
-        <div class="showcase">
-            <img src="Robot.jpeg" alt="Robot" class="robot-img">
-        </div>
+void setup() {
+  pinMode(directionPin_M1, OUTPUT);
+  pinMode(directionPin_M2, OUTPUT);
+  pinMode(URTRIG, OUTPUT);
+  pinMode(URPWM, INPUT);
+  myservo.attach(9);
+  myservo.write(90);
+  delay(500);
+}
 
-        <section class="grid">
-            <div class="card">
-                <h2>Labyrinthe</h2>
-                <p>Gestion autonome et évitement d'obstacles complexes.</p>
-                <a href="labyrinthe.html" class="btn">Explorer</a>
-            </div>
-            <div class="card">
-                <h2>Suivi de Ligne</h2>
-                <p>Asservissement de trajectoire haute précision.</p>
-                <a href="suivi_ligne.html" class="btn">Explorer</a>
-            </div>
-            <div class="card">
-                <h2>Suivi d'Objets</h2>
-                <p>Vision embarquée et tracking dynamique.</p>
-                <span class="btn">Bientôt</span>
-            </div>
-        </section>
-    </div>
+void loop() {
+  myservo.write(90);
+  int distance = MeasureDistance();
+  if (distance > distanceSeuil) {
+    carDrive(HIGH, speedForward, HIGH, speedForward);
+    delay(50);
+  } else {
+    carStop();
+    delay(500);
+    carDrive(LOW, speedBack, LOW, speedBack);
+    delay(300);
+    carStop();
+    delay(400);
+    myservo.write(30);
+    delay(700);
+    int dR = MeasureDistance();
+    myservo.write(150);
+    delay(700);
+    int dL = MeasureDistance();
+    myservo.write(90);
+    delay(500);
+    if (dL > dR) {
+      carDrive(LOW, speedTurn, HIGH, speedTurn);
+      delay(750);
+    } else {
+      carDrive(HIGH, speedTurn, LOW, speedTurn);
+      delay(750);
+    }
+    carStop();
+    delay(400);
+    carDrive(HIGH, speedForward, HIGH, speedForward);
+    delay(500);
+  }
+}
 
-    <script>
-        // Effet Particules
-        particlesJS("particles-js", {
-            "particles": { "number": { "value": 80 }, "color": { "value": "#00f2ff" }, "line_linked": { "enable": true, "color": "#00f2ff" }, "move": { "speed": 2 } },
-            "interactivity": { "events": { "onhover": { "enable": true, "mode": "repulse" } } }
-        });
+int MeasureDistance() {
+  digitalWrite(URTRIG, LOW);
+  digitalWrite(URTRIG, HIGH);
+  unsigned long duration = pulseIn(URPWM, LOW, 50000);
+  if (duration == 0) return 999;
+  return duration / 50;
+}
 
-        // Effet Machine à écrire
-        const textElement = document.getElementById('typing-text');
-        const phrases = ["ROBOT AUTONOME", "GESTION LABYRINTHE", "SUIVI DE TRAJECTOIRE", "VISION EMBARQUÉE"];
-        let phraseIndex = 0, charIndex = 0, isDeleting = false;
+void carDrive(bool leftDir, int leftSpeed, bool rightDir, int rightSpeed) {
+  digitalWrite(directionPin_M2, !leftDir);
+  analogWrite(speedPin_M2, leftSpeed);
+  digitalWrite(directionPin_M1, !rightDir);
+  analogWrite(speedPin_M1, rightSpeed);
+}
 
-        function type() {
-            const currentPhrase = phrases[phraseIndex];
-            textElement.textContent = isDeleting ? currentPhrase.substring(0, charIndex - 1) : currentPhrase.substring(0, charIndex + 1);
-            charIndex = isDeleting ? charIndex - 1 : charIndex + 1;
-            
-            if (!isDeleting && charIndex === currentPhrase.length) { setTimeout(() => isDeleting = true, 2000); }
-            else if (isDeleting && charIndex === 0) { isDeleting = false; phraseIndex = (phraseIndex + 1) % phrases.length; }
-            setTimeout(type, isDeleting ? 80 : 150);
-        }
-        type();
-
-        // Effet Halo souris
-        document.querySelectorAll('.card').forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                card.style.setProperty('--x', `${e.clientX - rect.left}px`);
-                card.style.setProperty('--y', `${e.clientY - rect.top}px`);
-            });
-        });
-    </script>
+void carStop() {
+  analogWrite(speedPin_M1, 0);
+  analogWrite(speedPin_M2, 0);
+}
+    </pre>
+    <a href="labyrinthe.html">⬅ Retour au menu</a>
 </body>
 </html>
