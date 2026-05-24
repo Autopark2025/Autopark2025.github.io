@@ -8,7 +8,7 @@
     <style>
         :root {
             --dark: #050505;
-            --accent: #ff8c00; 
+            --accent: #00f2ff; /* Retour au bleu */
             --text: #e0e0e0;
         }
         body { margin: 0; background-color: var(--dark); color: var(--text); font-family: 'Inter', sans-serif; overflow-x: hidden; }
@@ -26,8 +26,8 @@
         .showcase { max-width: 900px; margin: 0 auto 50px; padding: 20px; }
         .robot-img { 
             width: 100%; border-radius: 30px; 
-            box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 20px rgba(255,140,0,0.3); 
-            border: 1px solid #ff8c00; transition: 0.5s;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 20px rgba(0,242,255,0.3); 
+            border: 1px solid var(--accent); transition: 0.5s;
         }
 
         .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; max-width: 1100px; margin: 0 auto 100px; padding: 20px; }
@@ -38,7 +38,7 @@
         .card:hover { border-color: var(--accent); transform: translateY(-10px); }
         .card::before {
             content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(200px circle at var(--x, 50%) var(--y, 50%), rgba(255, 140, 0, 0.15), transparent 80%);
+            background: radial-gradient(200px circle at var(--x, 50%) var(--y, 50%), rgba(0, 242, 255, 0.15), transparent 80%);
             opacity: 0; transition: opacity 0.3s; pointer-events: none;
         }
         .card:hover::before { opacity: 1; }
@@ -68,14 +68,14 @@
     </div>
 
     <script>
-        // Effet Réseau électrique dense et réactif
+        // Effet Réseau électrique Bleu dense et réactif
         particlesJS("particles-js", {
             "particles": {
                 "number": { "value": 100, "density": { "enable": true, "value_area": 800 } },
-                "color": { "value": "#ff8c00" },
+                "color": { "value": "#00f2ff" },
                 "shape": { "type": "edge" },
                 "size": { "value": 0 },
-                "line_linked": { "enable": true, "distance": 150, "color": "#ff8c00", "opacity": 0.5, "width": 1.5 },
+                "line_linked": { "enable": true, "distance": 150, "color": "#00f2ff", "opacity": 0.5, "width": 1.5 },
                 "move": { "enable": true, "speed": 1.5 }
             },
             "interactivity": {
