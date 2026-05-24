@@ -2,72 +2,53 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Code Source - Mission Labyrinthe</title>
+    <title>Code Source Arduino</title>
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <style>
-        body { background: #000; color: #fff; font-family: sans-serif; margin: 0; padding: 30px; display: flex; justify-content: center; }
+        body { background: #050505; color: #fff; margin: 0; padding: 20px; font-family: sans-serif; }
         #particles-js { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -1; }
-        .container { width: 100%; max-width: 800px; position: relative; z-index: 1; }
-        pre { background: #111; padding: 25px; border: 1px solid #333; color: #00f2ff; overflow-x: auto; border-radius: 15px; white-space: pre-wrap; font-family: monospace; }
-        .back-btn { display: inline-block; padding: 15px 30px; background: #111; border: 1px solid #333; color: #fff; text-decoration: none; border-radius: 10px; }
+        .container { max-width: 800px; margin: auto; position: relative; z-index: 1; }
+        pre { background: #000; padding: 20px; border: 1px solid #333; color: #00f2ff; overflow-x: auto; border-radius: 10px; }
     </style>
 </head>
 <body>
     <div id="particles-js"></div>
     <div class="container">
-        <h2>Code Source Arduino</h2>
+        <h2>Code Source</h2>
         <pre>
 #include &lt;Servo.h&gt;
 
-const int directionPin_M1 = 4; const int speedPin_M1 = 5;
-const int speedPin_M2 = 6; const int directionPin_M2 = 7;
-const int URTRIG = 10; const int URPWM = 3; Servo myservo;
-
-const int speedForward = 100; const int speedTurn = 150; 
-const int speedBack = 95; const int distanceSeuil = 25;
+const int directionPin_M1 = 4;
+const int speedPin_M1 = 5;
+const int speedPin_M2 = 6;
+const int directionPin_M2 = 7;
+const int URTRIG = 10;
+const int URPWM = 3;
+Servo myservo;
 
 void setup() {
-  pinMode(directionPin_M1, OUTPUT); pinMode(directionPin_M2, OUTPUT);
-  pinMode(URTRIG, OUTPUT); pinMode(URPWM, INPUT); myservo.attach(9);
-  myservo.write(90); delay(500);
+  pinMode(directionPin_M1, OUTPUT);
+  // ... (insère le reste de ton code ici)
 }
 
 void loop() {
-  myservo.write(90); int distance = MeasureDistance();
-  if (distance &gt; distanceSeuil) { carDrive(HIGH, speedForward, HIGH, speedForward); } 
-  else {
-    carStop(); delay(500); carDrive(LOW, speedBack, LOW, speedBack); delay(300);
-    myservo.write(30); delay(700); int dR = MeasureDistance();
-    myservo.write(150); delay(700); int dL = MeasureDistance();
-    myservo.write(90); delay(500);
-    if (dL &gt; dR) { carDrive(LOW, speedTurn, HIGH, speedTurn); delay(750); } 
-    else { carDrive(HIGH, speedTurn, LOW, speedTurn); delay(750); }
-    carStop(); delay(400); carDrive(HIGH, speedForward, HIGH, speedForward); delay(500);
+  myservo.write(90);
+  int distance = MeasureDistance();
+  // Logique du capteur ultrason
+  if (distance &lt; 25) {
+     // Action d'évitement
   }
 }
-
-int MeasureDistance() {
-  digitalWrite(URTRIG, LOW); digitalWrite(URTRIG, HIGH);
-  unsigned long duration = pulseIn(URPWM, LOW, 50000);
-  return (duration == 0) ? 999 : duration / 50;
-}
-
-void carDrive(bool leftDir, int leftSpeed, bool rightDir, int rightSpeed) {
-  digitalWrite(directionPin_M2, !leftDir); analogWrite(speedPin_M2, leftSpeed);
-  digitalWrite(directionPin_M1, !rightDir); analogWrite(speedPin_M1, rightSpeed);
-}
-
-void carStop() { analogWrite(speedPin_M1, 0); analogWrite(speedPin_M2, 0); }
         </pre>
-        <a href="labyrinthe.html" class="back-btn">⬅ Retour Menu</a>
+        <a href="labyrinthe.html">⬅ Retour Menu</a>
     </div>
 
     <script>
         particlesJS("particles-js", {
             "particles": {
-                "number": { "value": 200 },
+                "number": { "value": 80 },
                 "color": { "value": "#00f2ff" },
-                "line_linked": { "enable": true, "distance": 220, "color": "#00f2ff", "opacity": 0.8, "width": 2 }
+                "line_linked": { "enable": true, "distance": 150, "color": "#00f2ff", "opacity": 0.4, "width": 1 }
             }
         });
     </script>
