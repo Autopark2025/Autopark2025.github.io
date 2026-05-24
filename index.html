@@ -8,10 +8,10 @@
     <style>
         :root {
             --dark: #050505;
-            --accent: #ff8c00; /* Orange exclusif */
+            --accent: #ff8c00; 
             --text: #e0e0e0;
         }
-        body { margin: 0; background-color: var(--dark); color: var(--text); font-family: 'Inter', sans-serif; overflow-x: hidden; position: relative; }
+        body { margin: 0; background-color: var(--dark); color: var(--text); font-family: 'Inter', sans-serif; overflow-x: hidden; }
         
         #particles-js { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: 0; }
         .main-content { position: relative; z-index: 1; }
@@ -23,9 +23,14 @@
         .cursor { color: #fff; animation: blink 0.7s infinite; }
         @keyframes blink { 50% { opacity: 0; } }
 
-        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; max-width: 1100px; margin: 100px auto; padding: 20px; }
-        
-        /* Cartes : Bordure et Halo Orange */
+        .showcase { max-width: 900px; margin: 0 auto 50px; padding: 20px; }
+        .robot-img { 
+            width: 100%; border-radius: 30px; 
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 20px rgba(255,140,0,0.3); 
+            border: 1px solid #ff8c00; transition: 0.5s;
+        }
+
+        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; max-width: 1100px; margin: 0 auto 100px; padding: 20px; }
         .card { 
             background: #0a0a0a; border: 1px solid #333; padding: 40px; border-radius: 20px; 
             transition: 0.4s; cursor: pointer; position: relative; overflow: hidden; 
@@ -51,6 +56,10 @@
             <p class="subtitle"><span id="typing-text"></span><span class="cursor">|</span></p>
         </header>
 
+        <div class="showcase">
+            <img src="Robot.jpeg" alt="Robot" class="robot-img">
+        </div>
+
         <section class="grid">
             <div class="card"><h2>Labyrinthe</h2><a href="labyrinthe.html" class="btn">Explorer</a></div>
             <div class="card"><h2>Suivi de Ligne</h2><a href="suivi_ligne.html" class="btn">Explorer</a></div>
@@ -59,19 +68,19 @@
     </div>
 
     <script>
-        // Effet Réseau électrique Orange réactif
+        // Effet Réseau électrique dense et réactif
         particlesJS("particles-js", {
             "particles": {
-                "number": { "value": 50 },
+                "number": { "value": 100, "density": { "enable": true, "value_area": 800 } },
                 "color": { "value": "#ff8c00" },
                 "shape": { "type": "edge" },
                 "size": { "value": 0 },
-                "line_linked": { "enable": true, "distance": 150, "color": "#ff8c00", "opacity": 0.4 },
-                "move": { "enable": true, "speed": 1 }
+                "line_linked": { "enable": true, "distance": 150, "color": "#ff8c00", "opacity": 0.5, "width": 1.5 },
+                "move": { "enable": true, "speed": 1.5 }
             },
             "interactivity": {
                 "events": { "onhover": { "enable": true, "mode": "grab" } },
-                "modes": { "grab": { "distance": 200, "line_linked": { "opacity": 1 } } }
+                "modes": { "grab": { "distance": 250, "line_linked": { "opacity": 1 } } }
             }
         });
 
