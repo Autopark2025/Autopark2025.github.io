@@ -6,17 +6,21 @@
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <style>
         :root { --dark: #050505; --accent: #00f2ff; }
-        body { margin: 0; background-color: #000; color: #e0e0e0; font-family: 'Inter', sans-serif; padding: 40px; }
+        body { margin: 0; background-color: #000; color: #e0e0e0; font-family: 'Inter', sans-serif; padding-top: 80px; }
         
-        /* Fond éclairs */
         #particles-js { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -1; }
         
-        .home-btn { position: fixed; top: 20px; left: 20px; color: var(--accent); text-decoration: none; font-size: 1.2rem; z-index: 10; }
+        /* Menu de navigation haut de page */
+        .top-nav { position: fixed; top: 0; left: 0; width: 100%; background: rgba(0,0,0,0.9); display: flex; justify-content: center; padding: 15px 0; gap: 30px; z-index: 100; border-bottom: 1px solid #333; }
+        .top-nav a { color: #fff; text-decoration: none; font-weight: bold; font-size: 0.9rem; letter-spacing: 1px; }
+        .top-nav a:hover { color: var(--accent); }
+
+        .home-btn { position: fixed; top: 15px; left: 20px; color: var(--accent); text-decoration: none; font-weight: bold; z-index: 101; }
         
         @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
         
-        .container { max-width: 900px; margin: 0 auto; z-index: 1; }
-        h1 { color: #fff; font-size: 3rem; border-left: 4px solid var(--accent); padding-left: 20px; }
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; z-index: 1; }
+        h1 { color: #fff; font-size: 3rem; border-left: 4px solid var(--accent); padding-left: 20px; margin-bottom: 40px; }
         
         section { 
             margin: 40px 0; background: #0a0a0a; padding: 30px; border-radius: 20px; 
@@ -33,12 +37,18 @@
 <body>
 
     <div id="particles-js"></div>
+    
     <a href="index.html" class="home-btn">🏠 Accueil</a>
+    <nav class="top-nav">
+        <a href="#objectifs">OBJECTIFS</a>
+        <a href="#algorithme">ALGORITHME</a>
+        <a href="#tests">VIDÉOS DE TESTS</a>
+    </nav>
 
     <div class="container">
         <h1>Suivi de Ligne</h1>
         
-        <section>
+        <section id="objectifs">
             <h2>1. Objectifs & Explications</h2>
             <p>Le système assure une navigation autonome fluide via :</p>
             <ul>
@@ -48,7 +58,7 @@
             </ul>
         </section>
 
-        <section>
+        <section id="algorithme">
             <h2>2. Algorithme (Code)</h2>
             <pre><code>#include &lt;HUSKYLENS.h&gt;
 #include &lt;Wire.h&gt;
@@ -99,7 +109,7 @@ void carDrive(bool lD, int lS, bool rD, int rS) {
 }</code></pre>
         </section>
 
-        <section>
+        <section id="tests">
             <h2>3. Vidéos de tests</h2>
             <div class="video-grid">
                 <div class="video-box">
