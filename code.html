@@ -3,275 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Partie 1 : Algorithme & Code Arduino</title>
+    <title>Portfolio | Système Cherokey 4WD</title>
+    <!-- Chargement de particles.js pour l'effet réseau -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <style>
         :root {
-            --bg-dark: #0a0a14;
-            --card-bg: #111126;
-            --accent-cyan: #00ffcc;
-            --accent-blue: #0077ff;
-            --text-main: #ffffff;
-            --text-muted: #8b8da9;
-            --border-color: #1f1f3e;
-            --code-bg: #05050f;
+            --dark: #050505;
+            --accent: #00f2ff;
+            --text: #e0e0e0;
         }
+        body { margin: 0; background-color: var(--dark); color: var(--text); font-family: 'Inter', sans-serif; overflow-x: hidden; position: relative; }
+        
+        /* Fond de particules */
+        #particles-js { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: 0; }
 
-        body {
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
+        /* Contenu au-dessus des particules */
+        .main-content { position: relative; z-index: 1; }
+
+        .scanner-line {
+            position: fixed; top: 0; left: 0; width: 100%; height: 2px;
+            background: var(--accent); box-shadow: 0 0 15px var(--accent);
+            z-index: 9999; pointer-events: none; animation: scan 4s linear infinite alternate;
         }
+        @keyframes scan { 0% { top: 0%; } 100% { top: 100%; } }
 
-        .container {
-            max-width: 950px;
-            width: 100%;
-            padding: 40px 20px;
+        header { padding: 80px 20px; text-align: center; }
+        h1 { font-size: 3.5rem; margin: 0; letter-spacing: -1px; text-transform: uppercase; background: linear-gradient(to right, #fff, var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        .subtitle { color: var(--accent); letter-spacing: 3px; margin-top: 15px; font-weight: 300; text-transform: uppercase; font-size: 1.5rem; }
+        #typing-text { color: var(--accent); font-weight: bold; }
+        .cursor { color: #fff; animation: blink 0.7s infinite; margin-left: 5px; }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        .showcase { max-width: 900px; margin: -50px auto 50px; padding: 20px; }
+        .robot-img { 
+            width: 100%; border-radius: 30px; 
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 20px rgba(0,242,255,0.1); 
+            border: 1px solid #222; transition: 0.5s;
         }
+        .robot-img:hover { transform: scale(1.03) rotate(-1deg); }
 
-        /* Fil d'Ariane / Navigation interne */
-        .breadcrumb {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 30px;
-            font-size: 0.95rem;
+        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; max-width: 1100px; margin: 0 auto 100px; padding: 20px; }
+        
+        .card { 
+            background: #0a0a0a; border: 1px solid #1a1a1a; padding: 40px; border-radius: 20px; 
+            transition: 0.4s; cursor: pointer; position: relative; overflow: hidden; 
         }
-
-        .breadcrumb a {
-            color: var(--text-muted);
-            text-decoration: none;
-            transition: color 0.2s;
+        .card:hover { border-color: var(--accent); transform: translateY(-10px); }
+        .card::before {
+            content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(200px circle at var(--x, 50%) var(--y, 50%), rgba(0, 242, 255, 0.15), transparent 80%);
+            opacity: 0; transition: opacity 0.3s; pointer-events: none;
         }
-
-        .breadcrumb a:hover {
-            color: var(--accent-cyan);
-        }
-
-        .breadcrumb span {
-            color: var(--border-color);
-        }
-
-        .breadcrumb .current {
-            color: var(--accent-cyan);
-            font-weight: bold;
-        }
-
-        header h1 {
-            font-size: 2.2rem;
-            margin: 0 0 10px 0;
-            color: #fff;
-        }
-
-        header p {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-            margin-bottom: 40px;
-        }
-
-        .section-card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 30px;
-            margin-bottom: 30px;
-        }
-
-        .section-card h2 {
-            margin-top: 0;
-            color: #fff;
-            font-size: 1.5rem;
-            border-bottom: 2px solid var(--border-color);
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-        }
-
-        .section-card p {
-            color: var(--text-muted);
-            line-height: 1.6;
-        }
-
-        /* Fenêtre de Code Source Style IDE */
-        .code-window {
-            background-color: var(--code-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 20px;
-            font-family: 'Consolas', 'Fira Code', monospace;
-            font-size: 0.95rem;
-            line-height: 1.5;
-            overflow-x: auto;
-            color: #d1d5db;
-        }
-
-        pre { margin: 0; }
-
-        /* Coloration syntaxique */
-        .keyword { color: #ff79c6; font-weight: bold; }
-        .type { color: #8be9fd; font-style: italic; }
-        .comment { color: #6272a4; font-style: italic; }
-        .number { color: #bd93f9; }
-        .string { color: #f1fa8c; }
-        .builtin { color: #50fa7b; }
-
-        .btn-back {
-            display: inline-block;
-            margin-top: 10px;
-            padding: 12px 24px;
-            background: #1f1f3e;
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: bold;
-            transition: background 0.2s;
-        }
-
-        .btn-back:hover {
-            background: #2b2b54;
-        }
+        .card:hover::before { opacity: 1; }
+        
+        .card h2 { margin-top: 0; color: #fff; }
+        .btn { display: inline-block; margin-top: 20px; padding: 12px 25px; border: 1px solid var(--accent); color: var(--accent); text-decoration: none; border-radius: 50px; transition: 0.3s; }
+        .btn:hover { background: var(--accent); color: #000; }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="breadcrumb">
-            <a href="index.html">🧭 Accueil</a>
-            <span>/</span>
-            <a href="labyrinthe.html">🤖 Partie 1 : Labyrinthe</a>
-            <span>/</span>
-            <span class="current">💻 Code & Algorithme</span>
-        </div>
+    <div id="particles-js"></div>
+    <div class="scanner-line"></div>
 
+    <div class="main-content">
         <header>
-            <h1>Code Source Arduino</h1>
-            <p>Étude de l'algorithme décisionnel d'évitement d'obstacles en environnement C++ / Arduino.</p>
+            <h1>SYSTÈME CHEROKEY 4WD</h1>
+            <p class="subtitle"><span id="typing-text"></span><span class="cursor">|</span></p>
         </header>
 
-        <main>
-            <div class="section-card">
-                <h2>Logique Globale de Décision</h2>
-                <p>
-                    Le programme exécute une boucle continue. Le robot avance en ligne droite tout en mesurant constamment la distance face à lui. Dès qu'un obstacle franchit le seuil critique des <strong>20 cm</strong>, le robot stoppe net sa course. 
-                </p>
-                <p>
-                    Le servomoteur oriente ensuite le capteur à ultrason à 30° (droite) puis à 150° (gauche). L'algorithme compare ces deux distances, choisit la voie la plus dégagée, effectue son pivot et force une avancée rapide pour s'extraire de l'impasse.
-                </p>
+        <div class="showcase">
+            <img src="Robot.jpeg" alt="Robot" class="robot-img">
+        </div>
+
+        <section class="grid">
+            <div class="card">
+                <h2>Labyrinthe</h2>
+                <p>Gestion autonome et évitement d'obstacles complexes.</p>
+                <a href="labyrinthe.html" class="btn">Explorer</a>
             </div>
-
-            <div class="section-card">
-                <h2>Code d'Évitement Complet</h2>
-                <div class="code-window">
-<pre><span class="comment">#include &lt;Servo.h&gt;</span>
-
-<span class="type">int</span> speedPin_M1 = <span class="number">5</span>;     <span class="comment">// Moteur Droit Vitesse</span>
-<span class="type">int</span> directionPin_M1 = <span class="number">4</span>; <span class="comment">// Moteur Droit Direction</span>
-<span class="type">int</span> speedPin_M2 = <span class="number">6</span>;     <span class="comment">// Moteur Gauche Vitesse</span>
-<span class="type">int</span> directionPin_M2 = <span class="number">7</span>; <span class="comment">// Moteur Gauche Direction</span>
-
-<span class="type">int</span> URTRIG = <span class="number">10</span>;         <span class="comment">// Trig ultrason</span>
-<span class="type">int</span> URPWM = <span class="number">3</span>;           <span class="comment">// Echo ultrason</span>
-
-Servo myservo;
-
-<span class="keyword">void</span> <span class="builtin">setup</span>() {
-  Serial.<span class="builtin">begin</span>(<span class="number">9600</span>);
-  <span class="builtin">pinMode</span>(directionPin_M1, <span class="keyword">OUTPUT</span>);
-  <span class="builtin">pinMode</span>(directionPin_M2, <span class="keyword">OUTPUT</span>);
-  <span class="builtin">pinMode</span>(URTRIG, <span class="keyword">OUTPUT</span>);
-  <span class="builtin">pinMode</span>(URPWM, <span class="keyword">INPUT</span>);
-  myservo.<span class="builtin">attach</span>(<span class="number">9</span>);
-  myservo.<span class="builtin">write</span>(<span class="number">90</span>); <span class="comment">// Capteur centré au départ</span>
-}
-
-<span class="type">int</span> MeasureDistance() {
-  <span class="builtin">digitalWrite</span>(URTRIG, <span class="keyword">LOW</span>);
-  <span class="builtin">digitalWrite</span>(URTRIG, <span class="keyword">HIGH</span>);
-  <span class="type">unsigned long</span> duration = <span class="builtin">pulseIn</span>(URPWM, <span class="keyword">LOW</span>, <span class="number">50000</span>);
-  <span class="keyword">if</span> (duration == <span class="number">0</span>) <span class="keyword">return</span> <span class="number">999</span>;
-  <span class="keyword">return</span> duration / <span class="number">50</span>;
-}
-
-<span class="keyword">void</span> carAdvance(<span class="type">int</span> leftSpeed, <span class="type">int</span> rightSpeed) {
-  <span class="builtin">digitalWrite</span>(directionPin_M1, <span class="keyword">HIGH</span>);
-  <span class="builtin">digitalWrite</span>(directionPin_M2, <span class="keyword">HIGH</span>);
-  <span class="builtin">analogWrite</span>(speedPin_M1, rightSpeed);
-  <span class="builtin">analogWrite</span>(speedPin_M2, leftSpeed);
-}
-
-<span class="keyword">void</span> carBack(<span class="type">int</span> leftSpeed, <span class="type">int</span> rightSpeed) {
-  <span class="builtin">digitalWrite</span>(directionPin_M1, <span class="keyword">LOW</span>);
-  <span class="builtin">digitalWrite</span>(directionPin_M2, <span class="keyword">LOW</span>);
-  <span class="builtin">analogWrite</span>(speedPin_M1, rightSpeed);
-  <span class="builtin">analogWrite</span>(speedPin_M2, leftSpeed);
-}
-
-<span class="keyword">void</span> carTurnLeft(<span class="type">int</span> leftSpeed, <span class="type">int</span> rightSpeed) {
-  <span class="builtin">digitalWrite</span>(directionPin_M1, <span class="keyword">HIGH</span>);
-  <span class="builtin">digitalWrite</span>(directionPin_M2, <span class="keyword">LOW</span>);
-  <span class="builtin">analogWrite</span>(speedPin_M1, rightSpeed);
-  <span class="builtin">analogWrite</span>(speedPin_M2, leftSpeed);
-}
-
-<span class="keyword">void</span> carTurnRight(<span class="type">int</span> leftSpeed, <span class="type">int</span> rightSpeed) {
-  <span class="builtin">digitalWrite</span>(directionPin_M1, <span class="keyword">LOW</span>);
-  <span class="builtin">digitalWrite</span>(directionPin_M2, <span class="keyword">HIGH</span>);
-  <span class="builtin">analogWrite</span>(speedPin_M1, rightSpeed);
-  <span class="builtin">analogWrite</span>(speedPin_M2, leftSpeed);
-}
-
-<span class="keyword">void</span> carStop() {
-  <span class="builtin">analogWrite</span>(speedPin_M1, <span class="number">0</span>);
-  <span class="builtin">analogWrite</span>(speedPin_M2, <span class="number">0</span>);
-}
-
-<span class="keyword">void</span> <span class="builtin">loop</span>() {
-  myservo.<span class="builtin">write</span>(<span class="number">90</span>);
-  <span class="type">int</span> distance = MeasureDistance();
-  
-  <span class="keyword">if</span> (distance &gt; <span class="number">20</span>) {
-    carAdvance(<span class="number">150</span>, <span class="number">150</span>);
-    <span class="builtin">delay</span>(<span class="number">50</span>);
-  } <span class="keyword">else</span> {
-    carStop();
-    <span class="builtin">delay</span>(<span class="number">400</span>);
-    
-    <span class="comment">// Scan Droite (30°)</span>
-    myservo.<span class="builtin">write</span>(<span class="number">30</span>);
-    <span class="builtin">delay</span>(<span class="number">600</span>);
-    <span class="type">int</span> dR = MeasureDistance();
-    
-    <span class="comment">// Scan Gauche (150°)</span>
-    myservo.<span class="builtin">write</span>(<span class="number">150</span>);
-    <span class="builtin">delay</span>(<span class="number">600</span>);
-    <span class="type">int</span> dL = MeasureDistance();
-    
-    myservo.<span class="builtin">write</span>(<span class="number">90</span>);
-    <span class="builtin">delay</span>(<span class="number">400</span>);
-    
-    <span class="comment">// Prise de décision</span>
-    <span class="keyword">if</span> (dL &gt; dR) {
-      carTurnLeft(<span class="number">200</span>, <span class="number">200</span>);
-      <span class="builtin">delay</span>(<span class="number">450</span>);
-    } <span class="keyword">else</span> {
-      carTurnRight(<span class="number">200</span>, <span class="number">200</span>);
-      <span class="builtin">delay</span>(<span class="number">450</span>);
-    }
-    carStop();
-    <span class="builtin">delay</span>(<span class="number">200</span>);
-    
-    <span class="comment">// Forçage d'extraction</span>
-    carAdvance(<span class="number">150</span>, <span class="number">150</span>);
-    <span class="builtin">delay</span>(<span class="number">600</span>);
-  }
-}</pre>
-                </div>
+            <div class="card">
+                <h2>Suivi de Ligne</h2>
+                <p>Asservissement de trajectoire haute précision.</p>
+                <a href="suivi_ligne.html" class="btn">Explorer</a>
             </div>
-
-            <a href="labyrinthe.html" class="btn-back">⬅ Revenir à la Partie 1</a>
-        </main>
+            <div class="card">
+                <h2>Suivi d'Objets</h2>
+                <p>Vision embarquée et tracking dynamique.</p>
+                <span class="btn">Bientôt</span>
+            </div>
+        </section>
     </div>
 
+    <script>
+        // Effet Particules
+        particlesJS("particles-js", {
+            "particles": { "number": { "value": 80 }, "color": { "value": "#00f2ff" }, "line_linked": { "enable": true, "color": "#00f2ff" }, "move": { "speed": 2 } },
+            "interactivity": { "events": { "onhover": { "enable": true, "mode": "repulse" } } }
+        });
+
+        // Effet Machine à écrire
+        const textElement = document.getElementById('typing-text');
+        const phrases = ["ROBOT AUTONOME", "GESTION LABYRINTHE", "SUIVI DE TRAJECTOIRE", "VISION EMBARQUÉE"];
+        let phraseIndex = 0, charIndex = 0, isDeleting = false;
+
+        function type() {
+            const currentPhrase = phrases[phraseIndex];
+            textElement.textContent = isDeleting ? currentPhrase.substring(0, charIndex - 1) : currentPhrase.substring(0, charIndex + 1);
+            charIndex = isDeleting ? charIndex - 1 : charIndex + 1;
+            
+            if (!isDeleting && charIndex === currentPhrase.length) { setTimeout(() => isDeleting = true, 2000); }
+            else if (isDeleting && charIndex === 0) { isDeleting = false; phraseIndex = (phraseIndex + 1) % phrases.length; }
+            setTimeout(type, isDeleting ? 80 : 150);
+        }
+        type();
+
+        // Effet Halo souris
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                card.style.setProperty('--x', `${e.clientX - rect.left}px`);
+                card.style.setProperty('--y', `${e.clientY - rect.top}px`);
+            });
+        });
+    </script>
 </body>
 </html>
