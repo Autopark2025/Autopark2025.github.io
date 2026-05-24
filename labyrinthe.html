@@ -25,7 +25,6 @@
         section { margin: 40px 0; background: #0a0a0a; padding: 30px; border-radius: 20px; border: 1px solid #1a1a1a; }
         h2 { color: var(--accent); margin-top: 0; }
 
-        /* Grille des 3 parties */
         .nav-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 30px; }
         .card { 
             background: #111; padding: 30px; border-radius: 15px; text-align: center; 
@@ -33,6 +32,7 @@
         }
         .card:hover { border-color: var(--accent); transform: translateY(-5px); box-shadow: 0 0 20px rgba(0, 242, 255, 0.2); }
         
+        .code-box { background: #000; padding: 20px; border-radius: 10px; border: 1px solid #333; overflow-x: auto; color: var(--accent); font-family: monospace; font-size: 0.85rem; }
         .video-box { background: #000; padding: 10px; border-radius: 10px; border: 1px solid #333; text-align: center; margin-top: 15px; }
         .back-btn { display: inline-block; margin-top: 20px; color: var(--accent); text-decoration: none; border: 1px solid var(--accent); padding: 10px 20px; border-radius: 50px; transition: 0.3s; }
         .back-btn:hover { background: var(--accent); color: #000; }
@@ -51,9 +51,8 @@
 
     <div class="container">
         <h1>Mission Labyrinthe</h1>
-        <p>Sélectionnez une phase de développement pour accéder à la documentation détaillée.</p>
+        <p>Analyse des capteurs et logique décisionnelle pour la résolution autonome.</p>
 
-        <!-- Menu des 3 parties -->
         <section>
             <h2>Exploration du Système</h2>
             <div class="nav-grid">
@@ -72,9 +71,54 @@
             </div>
         </section>
 
-        <section>
-            <h2>Validation Finale</h2>
-            <p>Résultat du parcours complet :</p>
+        <section id="validation">
+            <h2>Tests et Validation</h2>
+            <p>Le robot utilise un balayage par servomoteur pour comparer les distances (droite/gauche) en cas d'obstacle. La logique compare les mesures pour décider du pivot optimal, garantissant une navigation fluide.</p>
+            
+            <div class="code-box">
+<pre>
+#include &lt;Servo.h&gt;
+const int directionPin_M1 = 4; const int speedPin_M1 = 5;
+const int speedPin_M2 = 6; const int directionPin_M2 = 7;
+const int URTRIG = 10; const int URPWM = 3; Servo myservo;
+const int speedForward = 100; const int speedTurn = 150; 
+const int speedBack = 95; const int distanceSeuil = 25;
+
+void setup() {
+  pinMode(directionPin_M1, OUTPUT); pinMode(directionPin_M2, OUTPUT);
+  pinMode(URTRIG, OUTPUT); pinMode(URPWM, INPUT); myservo.attach(9);
+}
+
+void loop() {
+  myservo.write(90); int distance = MeasureDistance();
+  if (distance > distanceSeuil) { carDrive(HIGH, speedForward, HIGH, speedForward); } 
+  else {
+    carStop(); delay(500); carDrive(LOW, speedBack, LOW, speedBack); delay(300);
+    myservo.write(30); delay(700); int dR = MeasureDistance();
+    myservo.write(150); delay(700); int dL = MeasureDistance();
+    myservo.write(90); delay(500);
+    if (dL > dR) { carDrive(LOW, speedTurn, HIGH, speedTurn); delay(750); } 
+    else { carDrive(HIGH, speedTurn, LOW, speedTurn); delay(750); }
+    carStop(); delay(400); carDrive(HIGH, speedForward, HIGH, speedForward); delay(500);
+  }
+}
+
+int MeasureDistance() {
+  digitalWrite(URTRIG, LOW); digitalWrite(URTRIG, HIGH);
+  unsigned long duration = pulseIn(URPWM, LOW, 50000);
+  return (duration == 0) ? 999 : duration / 50;
+}
+
+void carDrive(bool leftDir, int leftSpeed, bool rightDir, int rightSpeed) {
+  digitalWrite(directionPin_M2, !leftDir); analogWrite(speedPin_M2, leftSpeed);
+  digitalWrite(directionPin_M1, !rightDir); analogWrite(speedPin_M1, rightSpeed);
+}
+
+void carStop() { analogWrite(speedPin_M1, 0); analogWrite(speedPin_M2, 0); }
+</pre>
+            </div>
+
+            <p style="margin-top:20px;">Résultat du parcours complet :</p>
             <div class="video-box">
                 <video width="100%" controls>
                     <source src="video_3.mp4" type="video/mp4">
