@@ -8,17 +8,15 @@
     <style>
         :root {
             --dark: #050505;
-            /* Changement de la couleur accent en Orange */
             --accent: #ff8c00; 
             --text: #e0e0e0;
         }
         body { margin: 0; background-color: var(--dark); color: var(--text); font-family: 'Inter', sans-serif; overflow-x: hidden; position: relative; }
         
-        /* Fond de particules orange */
+        /* Fond de réseau type "éclairs" */
         #particles-js { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: 0; }
         .main-content { position: relative; z-index: 1; }
 
-        /* Lignes et accents */
         .scanner-line {
             position: fixed; top: 0; left: 0; width: 100%; height: 2px;
             background: var(--accent); box-shadow: 0 0 15px var(--accent);
@@ -97,10 +95,20 @@
     </div>
 
     <script>
-        // Effet Particules en Orange
+        // Effet Réseau électrique Orange
         particlesJS("particles-js", {
-            "particles": { "number": { "value": 80 }, "color": { "value": "#ff8c00" }, "line_linked": { "enable": true, "color": "#ff8c00" }, "move": { "speed": 2 } },
-            "interactivity": { "events": { "onhover": { "enable": true, "mode": "repulse" } } }
+            "particles": {
+                "number": { "value": 60 },
+                "color": { "value": "#ff8c00" },
+                "shape": { "type": "edge" },
+                "size": { "value": 0 },
+                "line_linked": { "enable": true, "distance": 180, "color": "#ff8c00", "opacity": 0.4, "width": 1.5 },
+                "move": { "enable": true, "speed": 2 }
+            },
+            "interactivity": {
+                "events": { "onhover": { "enable": true, "mode": "grab" } },
+                "modes": { "grab": { "distance": 200, "line_linked": { "opacity": 1 } } }
+            }
         });
 
         // Texte dynamique
