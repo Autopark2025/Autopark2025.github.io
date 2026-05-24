@@ -5,22 +5,39 @@
     <title>Code Source - Mission Labyrinthe</title>
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <style>
-        body { background: #000; color: #e0e0e0; font-family: 'Inter', sans-serif; margin: 0; padding: 30px; display: flex; justify-content: center; }
+        body { 
+            background: #000; color: #e0e0e0; font-family: 'Inter', sans-serif; 
+            margin: 0; padding: 30px; display: flex; justify-content: center; 
+        }
+        /* Fond pour les éclairs */
         #particles-js { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -1; }
+        
         .container { width: 100%; max-width: 800px; position: relative; z-index: 1; }
         .expl { color: #00f2ff; border-left: 3px solid #00f2ff; padding-left: 15px; margin-bottom: 20px; }
-        pre { background: #111; padding: 25px; border: 1px solid #333; color: #00f2ff; overflow-x: auto; border-radius: 15px; white-space: pre-wrap; word-wrap: break-word; font-family: monospace; }
-        .back-btn { display: inline-block; padding: 15px 30px; background: #111; border: 1px solid #333; color: #fff; text-decoration: none; border-radius: 10px; transition: 0.3s; }
+        
+        pre { 
+            background: #111; padding: 25px; border: 1px solid #333; 
+            color: #00f2ff; overflow-x: auto; font-family: monospace; 
+            border-radius: 15px; white-space: pre-wrap; word-wrap: break-word;
+        }
+        
+        .back-btn { 
+            display: inline-block; padding: 15px 30px; background: #111; 
+            border: 1px solid #333; color: #fff; text-decoration: none; 
+            border-radius: 10px; transition: 0.3s;
+        }
         .back-btn:hover { border-color: #00f2ff; }
     </style>
 </head>
 <body>
     <div id="particles-js"></div>
+
     <div class="container">
         <div class="expl">
             <h2>Explication du fonctionnement</h2>
             <p>Le robot utilise un capteur ultrason pour mesurer les obstacles. En cas de blocage (distance &lt; 25cm), il recule, scanne à gauche et à droite via le servomoteur, puis compare les distances pour pivoter vers le chemin le plus dégagé.</p>
         </div>
+        
         <pre>
 #include &lt;Servo.h&gt;
 
@@ -64,11 +81,29 @@ void carDrive(bool leftDir, int leftSpeed, bool rightDir, int rightSpeed) {
 
 void carStop() { analogWrite(speedPin_M1, 0); analogWrite(speedPin_M2, 0); }
         </pre>
+        
         <a href="labyrinthe.html" class="back-btn">⬅ Retour Menu</a>
     </div>
 
     <script>
-        particlesJS("particles-js", {"particles":{"number":{"value":80},"color":{"value":"#00f2ff"},"shape":{"type":"edge"},"line_linked":{"enable":true,"distance":150,"color":"#00f2ff","opacity":0.4}}});
+        particlesJS("particles-js", {
+            "particles": {
+                "number": { "value": 60, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": "#00f2ff" },
+                "shape": { "type": "circle" }, 
+                "opacity": { "value": 0.3 },
+                "size": { "value": 2 },
+                "line_linked": { 
+                    "enable": true, 
+                    "distance": 150, 
+                    "color": "#00f2ff", 
+                    "opacity": 0.6, 
+                    "width": 1 
+                },
+                "move": { "enable": true, "speed": 1 }
+            },
+            "interactivity": { "events": { "onhover": { "enable": true, "mode": "grab" } } }
+        });
     </script>
 </body>
 </html>
