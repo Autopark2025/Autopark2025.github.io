@@ -4,22 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio | Système Cherokey 4WD</title>
-    <!-- Chargement de particles.js pour l'effet réseau -->
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <style>
         :root {
             --dark: #050505;
-            --accent: #00f2ff;
+            /* Changement de la couleur accent en Orange */
+            --accent: #ff8c00; 
             --text: #e0e0e0;
         }
         body { margin: 0; background-color: var(--dark); color: var(--text); font-family: 'Inter', sans-serif; overflow-x: hidden; position: relative; }
         
-        /* Fond de particules */
+        /* Fond de particules orange */
         #particles-js { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: 0; }
-
-        /* Contenu au-dessus des particules */
         .main-content { position: relative; z-index: 1; }
 
+        /* Lignes et accents */
         .scanner-line {
             position: fixed; top: 0; left: 0; width: 100%; height: 2px;
             background: var(--accent); box-shadow: 0 0 15px var(--accent);
@@ -38,21 +37,22 @@
         .showcase { max-width: 900px; margin: -50px auto 50px; padding: 20px; }
         .robot-img { 
             width: 100%; border-radius: 30px; 
-            box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 20px rgba(0,242,255,0.1); 
-            border: 1px solid #222; transition: 0.5s;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 20px rgba(255,140,0,0.2); 
+            border: 1px solid #332200; transition: 0.5s;
         }
         .robot-img:hover { transform: scale(1.03) rotate(-1deg); }
 
         .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; max-width: 1100px; margin: 0 auto 100px; padding: 20px; }
         
         .card { 
-            background: #0a0a0a; border: 1px solid #1a1a1a; padding: 40px; border-radius: 20px; 
+            background: #0a0a0a; border: 1px solid #2a1a00; padding: 40px; border-radius: 20px; 
             transition: 0.4s; cursor: pointer; position: relative; overflow: hidden; 
         }
         .card:hover { border-color: var(--accent); transform: translateY(-10px); }
+        
         .card::before {
             content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(200px circle at var(--x, 50%) var(--y, 50%), rgba(0, 242, 255, 0.15), transparent 80%);
+            background: radial-gradient(200px circle at var(--x, 50%) var(--y, 50%), rgba(255, 140, 0, 0.15), transparent 80%);
             opacity: 0; transition: opacity 0.3s; pointer-events: none;
         }
         .card:hover::before { opacity: 1; }
@@ -97,13 +97,13 @@
     </div>
 
     <script>
-        // Effet Particules
+        // Effet Particules en Orange
         particlesJS("particles-js", {
-            "particles": { "number": { "value": 80 }, "color": { "value": "#00f2ff" }, "line_linked": { "enable": true, "color": "#00f2ff" }, "move": { "speed": 2 } },
+            "particles": { "number": { "value": 80 }, "color": { "value": "#ff8c00" }, "line_linked": { "enable": true, "color": "#ff8c00" }, "move": { "speed": 2 } },
             "interactivity": { "events": { "onhover": { "enable": true, "mode": "repulse" } } }
         });
 
-        // Effet Machine à écrire
+        // Texte dynamique
         const textElement = document.getElementById('typing-text');
         const phrases = ["ROBOT AUTONOME", "GESTION LABYRINTHE", "SUIVI DE TRAJECTOIRE", "VISION EMBARQUÉE"];
         let phraseIndex = 0, charIndex = 0, isDeleting = false;
@@ -119,7 +119,7 @@
         }
         type();
 
-        // Effet Halo souris
+        // Halo souris
         document.querySelectorAll('.card').forEach(card => {
             card.addEventListener('mousemove', (e) => {
                 const rect = card.getBoundingClientRect();
