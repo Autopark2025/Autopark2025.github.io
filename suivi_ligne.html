@@ -2,46 +2,49 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Suivi de Ligne | Système Cherokey 4WD</title>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <style>
-        :root { --dark: #050505; --accent: #00f2ff; --text: #e0e0e0; }
-        body { margin: 0; background-color: var(--dark); color: var(--text); font-family: 'Inter', sans-serif; position: relative; padding: 40px; overflow-x: hidden; }
+        :root { --dark: #050505; --accent: #00f2ff; }
+        body { margin: 0; background-color: #000; color: #e0e0e0; font-family: 'Inter', sans-serif; padding: 40px; }
         
-        /* Design Interface */
-        .scanner-line { position: fixed; top: 0; left: 0; width: 100%; height: 2px; background: var(--accent); box-shadow: 0 0 15px var(--accent); z-index: 9999; pointer-events: none; animation: scan 4s linear infinite alternate; }
-        @keyframes scan { 0% { top: 0%; } 100% { top: 100%; } }
-        .vertical-line { position: fixed; top: 0; left: 50%; width: 1px; height: 100vh; background: rgba(0, 242, 255, 0.1); pointer-events: none; z-index: 0; }
-
-        .container { max-width: 900px; margin: 0 auto; position: relative; z-index: 1; }
-        h1 { color: #fff; font-size: 3rem; text-transform: uppercase; border-left: 4px solid var(--accent); padding-left: 20px; }
-        section { margin: 40px 0; background: #0a0a0a; padding: 30px; border-radius: 20px; border: 1px solid #1a1a1a; }
+        /* Fond éclairs */
+        #particles-js { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -1; }
+        
+        .home-btn { position: fixed; top: 20px; left: 20px; color: var(--accent); text-decoration: none; font-size: 1.2rem; z-index: 10; }
+        
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
+        
+        .container { max-width: 900px; margin: 0 auto; z-index: 1; }
+        h1 { color: #fff; font-size: 3rem; border-left: 4px solid var(--accent); padding-left: 20px; }
+        
+        section { 
+            margin: 40px 0; background: #0a0a0a; padding: 30px; border-radius: 20px; 
+            border: 1px solid #333; animation: float 6s ease-in-out infinite; 
+        }
         h2 { color: var(--accent); margin-top: 0; }
         
-        pre { background: #000; padding: 20px; border-radius: 10px; color: #00f2ff; overflow-x: auto; border: 1px solid #333; max-height: 400px; font-size: 0.85rem; }
+        pre { background: #000; padding: 20px; border-radius: 10px; color: #00f2ff; overflow-x: auto; border: 1px solid #333; font-family: monospace; white-space: pre-wrap; }
         
         .video-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
         .video-box { background: #000; padding: 10px; border-radius: 10px; border: 1px solid #333; text-align: center; }
-        
-        .back-btn { display: inline-block; margin-top: 20px; color: var(--accent); text-decoration: none; border: 1px solid var(--accent); padding: 10px 20px; border-radius: 50px; transition: 0.3s; }
-        .back-btn:hover { background: var(--accent); color: #000; }
     </style>
 </head>
 <body>
 
-    <div class="scanner-line"></div>
-    <div class="vertical-line"></div>
+    <div id="particles-js"></div>
+    <a href="index.html" class="home-btn">🏠 Accueil</a>
 
     <div class="container">
         <h1>Suivi de Ligne</h1>
         
         <section>
             <h2>1. Objectifs & Explications</h2>
-            <p>L'objectif est d'assurer une <strong>navigation autonome fluide</strong>. Le système repose sur :</p>
+            <p>Le système assure une navigation autonome fluide via :</p>
             <ul>
-                <li><strong>Détection :</strong> Utilisation de l'algorithme "Line Tracking" de la HuskyLens.</li>
-                <li><strong>Asservissement (P) :</strong> Correction proportionnelle (Kp=0.7) pour éviter les oscillations.</li>
-                <li><strong>Sécurité :</strong> Algorithme d'interception de virage à 90° avec "mémoire de direction".</li>
+                <li><strong>Détection :</strong> Algorithme "Line Tracking" HuskyLens.</li>
+                <li><strong>Asservissement (P) :</strong> Correction proportionnelle (Kp=0.7).</li>
+                <li><strong>Sécurité :</strong> Interception de virage 90° avec mémoire.</li>
             </ul>
         </section>
 
@@ -50,23 +53,16 @@
             <pre><code>#include &lt;HUSKYLENS.h&gt;
 #include &lt;Wire.h&gt;
 
-const int directionPin_M1 = 4;
-const int speedPin_M1 = 5;
-const int speedPin_M2 = 6;
-const int directionPin_M2 = 7;
+const int directionPin_M1 = 4; const int speedPin_M1 = 5;
+const int speedPin_M2 = 6; const int directionPin_M2 = 7;
 
 HUSKYLENS huskylens;
-const int CENTER_X = 160;
-const int BASE_SPEED = 90;
-const float Kp = 0.7;
-int lastDirection = 1;
-bool isLineCurrentlyLost = false;
-unsigned long timeLost = 0;
+const int CENTER_X = 160; const int BASE_SPEED = 90;
+const float Kp = 0.7; int lastDirection = 1;
+bool isLineCurrentlyLost = false; unsigned long timeLost = 0;
 
 void setup() {
-  Serial.begin(115200);
-  Wire.begin();
-  pinMode(directionPin_M1, OUTPUT); pinMode(speedPin_M1, OUTPUT);
+  Wire.begin(); pinMode(directionPin_M1, OUTPUT); pinMode(speedPin_M1, OUTPUT);
   pinMode(speedPin_M2, OUTPUT); pinMode(directionPin_M2, OUTPUT);
   while (!huskylens.begin(Wire));
   huskylens.writeAlgorithm(ALGORITHM_LINE_TRACKING);
@@ -104,29 +100,29 @@ void carDrive(bool lD, int lS, bool rD, int rS) {
         </section>
 
         <section>
-            <h2>3. Défis rencontrés</h2>
-            <p>Le principal défi fut la gestion de la perte de signal dans les virages à angle droit (90°).</p>
-            <div class="video-box" style="margin-top: 15px; border-color: var(--accent);">
-                <video width="100%" controls><source src="video_90.mp4" type="video/mp4"></video>
-            </div>
-        </section>
-
-        <section>
-            <h2>4. Tests et Validation</h2>
+            <h2>3. Vidéos de tests</h2>
             <div class="video-grid">
                 <div class="video-box">
-                    <p style="color: var(--accent);">Vidéo 1</p>
-                    <video width="100%" controls><source src="video_1.mp4" type="video/mp4"></video>
+                    <p style="color: var(--accent);">Virage 90°</p>
+                    <video width="100%" controls><source src="video_90.mp4" type="video/mp4"></video>
                 </div>
                 <div class="video-box">
-                    <p style="color: var(--accent);">Vidéo 2</p>
-                    <video width="100%" controls><source src="video_2.mp4" type="video/mp4"></video>
+                    <p style="color: var(--accent);">Validation globale</p>
+                    <video width="100%" controls><source src="video_1.mp4" type="video/mp4"></video>
                 </div>
             </div>
         </section>
-
-        <a href="index.html" class="back-btn">← Retour à l'accueil</a>
     </div>
 
+    <script>
+        particlesJS("particles-js", {
+            "particles": {
+                "number": { "value": 100 },
+                "color": { "value": "#00f2ff" },
+                "opacity": { "value": 0 },
+                "line_linked": { "enable": true, "distance": 180, "color": "#00f2ff", "opacity": 0.8, "width": 1.5 }
+            }
+        });
+    </script>
 </body>
 </html>
