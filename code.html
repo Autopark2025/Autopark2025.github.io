@@ -2,96 +2,61 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Code Source</title>
+    <title>Code Source - Mission Labyrinthe</title>
     <style>
-        body { background: #000; color: #00f2ff; font-family: 'Courier New', monospace; padding: 30px; }
-        pre { background: #111; padding: 20px; border: 1px solid #333; border-radius: 10px; overflow-x: auto; }
+        body { background: #000; color: #e0e0e0; font-family: sans-serif; padding: 30px; }
+        .expl { color: #00f2ff; border-left: 3px solid #00f2ff; padding-left: 15px; margin-bottom: 20px; }
+        pre { background: #111; padding: 20px; border: 1px solid #333; color: #00f2ff; overflow-x: auto; font-family: monospace; }
         a { color: #fff; text-decoration: none; }
     </style>
 </head>
 <body>
-    <h2>Code Source Arduino</h2>
+    <div class="expl">
+        <h2>Explication du fonctionnement</h2>
+        <p>Le robot utilise un capteur ultrason pour mesurer les obstacles. En cas de blocage (distance &lt; 25cm), il recule, scanne à gauche et à droite via le servomoteur, puis compare les distances pour pivoter vers le chemin le plus dégagé.</p>
+    </div>
     <pre>
 #include &lt;Servo.h&gt;
 
-const int directionPin_M1 = 4;
-const int speedPin_M1 = 5;
-const int speedPin_M2 = 6;
-const int directionPin_M2 = 7;
-const int URTRIG = 10;
-const int URPWM = 3;
-Servo myservo;
+const int directionPin_M1 = 4; const int speedPin_M1 = 5;
+const int speedPin_M2 = 6; const int directionPin_M2 = 7;
+const int URTRIG = 10; const int URPWM = 3; Servo myservo;
 
-const int speedForward = 100;
-const int speedTurn = 150;
-const int speedBack = 95;
-const int distanceSeuil = 25;
+const int speedForward = 100; const int speedTurn = 150; 
+const int speedBack = 95; const int distanceSeuil = 25;
 
 void setup() {
-  pinMode(directionPin_M1, OUTPUT);
-  pinMode(directionPin_M2, OUTPUT);
-  pinMode(URTRIG, OUTPUT);
-  pinMode(URPWM, INPUT);
-  myservo.attach(9);
-  myservo.write(90);
-  delay(500);
+  pinMode(directionPin_M1, OUTPUT); pinMode(directionPin_M2, OUTPUT);
+  pinMode(URTRIG, OUTPUT); pinMode(URPWM, INPUT); myservo.attach(9);
 }
 
 void loop() {
-  myservo.write(90);
-  int distance = MeasureDistance();
-  if (distance > distanceSeuil) {
-    carDrive(HIGH, speedForward, HIGH, speedForward);
-    delay(50);
-  } else {
-    carStop();
-    delay(500);
-    carDrive(LOW, speedBack, LOW, speedBack);
-    delay(300);
-    carStop();
-    delay(400);
-    myservo.write(30);
-    delay(700);
-    int dR = MeasureDistance();
-    myservo.write(150);
-    delay(700);
-    int dL = MeasureDistance();
-    myservo.write(90);
-    delay(500);
-    if (dL > dR) {
-      carDrive(LOW, speedTurn, HIGH, speedTurn);
-      delay(750);
-    } else {
-      carDrive(HIGH, speedTurn, LOW, speedTurn);
-      delay(750);
-    }
-    carStop();
-    delay(400);
-    carDrive(HIGH, speedForward, HIGH, speedForward);
-    delay(500);
+  myservo.write(90); int distance = MeasureDistance();
+  if (distance > distanceSeuil) { carDrive(HIGH, speedForward, HIGH, speedForward); } 
+  else {
+    carStop(); delay(500); carDrive(LOW, speedBack, LOW, speedBack); delay(300);
+    myservo.write(30); delay(700); int dR = MeasureDistance();
+    myservo.write(150); delay(700); int dL = MeasureDistance();
+    myservo.write(90); delay(500);
+    if (dL > dR) { carDrive(LOW, speedTurn, HIGH, speedTurn); delay(750); } 
+    else { carDrive(HIGH, speedTurn, LOW, speedTurn); delay(750); }
+    carStop(); delay(400); carDrive(HIGH, speedForward, HIGH, speedForward); delay(500);
   }
 }
 
 int MeasureDistance() {
-  digitalWrite(URTRIG, LOW);
-  digitalWrite(URTRIG, HIGH);
+  digitalWrite(URTRIG, LOW); digitalWrite(URTRIG, HIGH);
   unsigned long duration = pulseIn(URPWM, LOW, 50000);
-  if (duration == 0) return 999;
-  return duration / 50;
+  return (duration == 0) ? 999 : duration / 50;
 }
 
 void carDrive(bool leftDir, int leftSpeed, bool rightDir, int rightSpeed) {
-  digitalWrite(directionPin_M2, !leftDir);
-  analogWrite(speedPin_M2, leftSpeed);
-  digitalWrite(directionPin_M1, !rightDir);
-  analogWrite(speedPin_M1, rightSpeed);
+  digitalWrite(directionPin_M2, !leftDir); analogWrite(speedPin_M2, leftSpeed);
+  digitalWrite(directionPin_M1, !rightDir); analogWrite(speedPin_M1, rightSpeed);
 }
 
-void carStop() {
-  analogWrite(speedPin_M1, 0);
-  analogWrite(speedPin_M2, 0);
-}
+void carStop() { analogWrite(speedPin_M1, 0); analogWrite(speedPin_M2, 0); }
     </pre>
-    <a href="labyrinthe.html">⬅ Retour au menu</a>
+    <a href="labyrinthe.html">⬅ Retour Menu</a>
 </body>
 </html>
