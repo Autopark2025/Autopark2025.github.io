@@ -1,62 +1,51 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Code Source - Mission Labyrinthe</title>
-    <style>
-        body { background: #000; color: #e0e0e0; font-family: sans-serif; padding: 30px; }
-        .expl { color: #00f2ff; border-left: 3px solid #00f2ff; padding-left: 15px; margin-bottom: 20px; }
-        pre { background: #111; padding: 20px; border: 1px solid #333; color: #00f2ff; overflow-x: auto; font-family: monospace; }
-        a { color: #fff; text-decoration: none; }
-    </style>
-</head>
+<style>
+    body { 
+        background: #000; 
+        color: #e0e0e0; 
+        font-family: 'Inter', sans-serif; 
+        margin: 0;
+        display: flex; 
+        justify-content: center; /* Centre horizontalement */
+        padding: 30px;
+    }
+    
+    .container { 
+        width: 100%; 
+        max-width: 800px; /* Limite la largeur pour une lecture confortable */
+    }
+
+    .expl { 
+        color: #00f2ff; 
+        border-left: 3px solid #00f2ff; 
+        padding-left: 15px; 
+        margin-bottom: 20px; 
+    }
+    
+    pre { 
+        background: #111; 
+        padding: 20px; 
+        border: 1px solid #333; 
+        color: #00f2ff; 
+        overflow-x: auto; 
+        font-family: 'Courier New', Courier, monospace; 
+        white-space: pre-wrap; /* Retour à la ligne automatique */
+        word-wrap: break-word; 
+    }
+    
+    a { color: #fff; text-decoration: none; display: block; margin-top: 20px; }
+    a:hover { color: #00f2ff; }
+</style>
+
 <body>
-    <div class="expl">
-        <h2>Explication du fonctionnement</h2>
-        <p>Le robot utilise un capteur ultrason pour mesurer les obstacles. En cas de blocage (distance &lt; 25cm), il recule, scanne à gauche et à droite via le servomoteur, puis compare les distances pour pivoter vers le chemin le plus dégagé.</p>
+    <div class="container">
+        <div class="expl">
+            <h2>Explication du fonctionnement</h2>
+            <p>Le robot utilise un capteur ultrason pour mesurer les obstacles. En cas de blocage (distance &lt; 25cm), il recule, scanne à gauche et à droite via le servomoteur, puis compare les distances pour pivoter vers le chemin le plus dégagé.</p>
+        </div>
+        
+        <pre>
+            </pre>
+        
+        <a href="labyrinthe.html">⬅ Retour Menu</a>
     </div>
-    <pre>
-#include &lt;Servo.h&gt;
-
-const int directionPin_M1 = 4; const int speedPin_M1 = 5;
-const int speedPin_M2 = 6; const int directionPin_M2 = 7;
-const int URTRIG = 10; const int URPWM = 3; Servo myservo;
-
-const int speedForward = 100; const int speedTurn = 150; 
-const int speedBack = 95; const int distanceSeuil = 25;
-
-void setup() {
-  pinMode(directionPin_M1, OUTPUT); pinMode(directionPin_M2, OUTPUT);
-  pinMode(URTRIG, OUTPUT); pinMode(URPWM, INPUT); myservo.attach(9);
-}
-
-void loop() {
-  myservo.write(90); int distance = MeasureDistance();
-  if (distance > distanceSeuil) { carDrive(HIGH, speedForward, HIGH, speedForward); } 
-  else {
-    carStop(); delay(500); carDrive(LOW, speedBack, LOW, speedBack); delay(300);
-    myservo.write(30); delay(700); int dR = MeasureDistance();
-    myservo.write(150); delay(700); int dL = MeasureDistance();
-    myservo.write(90); delay(500);
-    if (dL > dR) { carDrive(LOW, speedTurn, HIGH, speedTurn); delay(750); } 
-    else { carDrive(HIGH, speedTurn, LOW, speedTurn); delay(750); }
-    carStop(); delay(400); carDrive(HIGH, speedForward, HIGH, speedForward); delay(500);
-  }
-}
-
-int MeasureDistance() {
-  digitalWrite(URTRIG, LOW); digitalWrite(URTRIG, HIGH);
-  unsigned long duration = pulseIn(URPWM, LOW, 50000);
-  return (duration == 0) ? 999 : duration / 50;
-}
-
-void carDrive(bool leftDir, int leftSpeed, bool rightDir, int rightSpeed) {
-  digitalWrite(directionPin_M2, !leftDir); analogWrite(speedPin_M2, leftSpeed);
-  digitalWrite(directionPin_M1, !rightDir); analogWrite(speedPin_M1, rightSpeed);
-}
-
-void carStop() { analogWrite(speedPin_M1, 0); analogWrite(speedPin_M2, 0); }
-    </pre>
-    <a href="labyrinthe.html">⬅ Retour Menu</a>
 </body>
-</html>
