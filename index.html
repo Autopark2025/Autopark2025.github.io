@@ -8,13 +8,15 @@
     <style>
         :root {
             --dark: #050505;
-            --accent: #00f2ff; /* Retour au bleu */
+            --accent: #00f2ff; 
             --text: #e0e0e0;
         }
         body { margin: 0; background-color: var(--dark); color: var(--text); font-family: 'Inter', sans-serif; overflow-x: hidden; }
         
-        #particles-js { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: 0; }
-        .main-content { position: relative; z-index: 1; }
+        /* Réseau interactif au-dessus du contenu pour capter la souris */
+        #particles-js { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: 10; pointer-events: auto; }
+        .main-content { position: relative; z-index: 20; pointer-events: none; }
+        .main-content > * { pointer-events: auto; }
 
         header { padding: 80px 20px; text-align: center; }
         h1 { font-size: 3.5rem; margin: 0; letter-spacing: -1px; text-transform: uppercase; color: #fff; }
@@ -68,23 +70,24 @@
     </div>
 
     <script>
-        // Effet Réseau électrique Bleu dense et réactif
         particlesJS("particles-js", {
             "particles": {
-                "number": { "value": 100, "density": { "enable": true, "value_area": 800 } },
+                "number": { "value": 80 },
                 "color": { "value": "#00f2ff" },
                 "shape": { "type": "edge" },
                 "size": { "value": 0 },
-                "line_linked": { "enable": true, "distance": 150, "color": "#00f2ff", "opacity": 0.5, "width": 1.5 },
-                "move": { "enable": true, "speed": 1.5 }
+                "line_linked": { "enable": true, "distance": 150, "color": "#00f2ff", "opacity": 0.4, "width": 1.5 },
+                "move": { "enable": true, "speed": 1 }
             },
             "interactivity": {
-                "events": { "onhover": { "enable": true, "mode": "grab" } },
-                "modes": { "grab": { "distance": 250, "line_linked": { "opacity": 1 } } }
+                "events": { "onhover": { "enable": true, "mode": ["grab", "repulse"] } },
+                "modes": { 
+                    "grab": { "distance": 200, "line_linked": { "opacity": 1 } },
+                    "repulse": { "distance": 100 }
+                }
             }
         });
 
-        // Texte dynamique
         const textElement = document.getElementById('typing-text');
         const phrases = ["ROBOT AUTONOME", "GESTION LABYRINTHE", "SUIVI DE TRAJECTOIRE", "VISION EMBARQUÉE"];
         let phraseIndex = 0, charIndex = 0, isDeleting = false;
@@ -98,7 +101,6 @@
         }
         type();
 
-        // Halo souris
         document.querySelectorAll('.card').forEach(card => {
             card.addEventListener('mousemove', (e) => {
                 const rect = card.getBoundingClientRect();
