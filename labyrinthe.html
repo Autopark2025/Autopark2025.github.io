@@ -16,15 +16,21 @@
             text-decoration: none; border-radius: 15px; text-align: center; font-weight: bold;
             animation: float 4s ease-in-out infinite; transition: 0.3s;
         }
+        /* Délais d'animation décalés pour un effet dynamique */
+        .card:nth-child(1) { animation-delay: 0s; }
         .card:nth-child(2) { animation-delay: 0.5s; }
+        .card:nth-child(3) { animation-delay: 1s; }
+        
         .card:hover { border-color: var(--accent); background: #111; }
     </style>
 </head>
 <body>
     <div id="particles-js"></div>
+    
     <div class="grid">
         <a href="cablage.html" class="card">🔌 Câblage</a>
         <a href="code.html" class="card">⚙️ Code Source</a>
+        <a href="tests.html" class="card">📊 Tests & Validation</a>
     </div>
 
     <script>
