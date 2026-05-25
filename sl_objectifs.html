@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Objectifs | Suivi de Ligne</title>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <style>
+        body { margin: 0; background: #000; color: #fff; font-family: 'Inter', sans-serif; padding: 40px; }
+        #particles-js { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -1; }
+        .back-link { color: #00f2ff; text-decoration: none; font-weight: bold; }
+        .container { max-width: 800px; margin: 40px auto; background: #0a0a0a; padding: 40px; border-radius: 20px; border: 1px solid #333; }
+        h1 { color: #fff; border-left: 4px solid #00f2ff; padding-left: 15px; }
+        ul { line-height: 1.8; }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+    <a href="sl_menu.html" class="back-link">⬅ Retour au menu Suivi</a>
+    
+    <div class="container">
+        <h1>Objectifs & Explications</h1>
+        <p>Le système assure une navigation autonome fluide via :</p>
+        <ul>
+            <li><strong>Détection :</strong> Algorithme "Line Tracking" HuskyLens.</li>
+            <li><strong>Asservissement (P) :</strong> Correction proportionnelle (Kp=0.7) pour maintenir le cap.</li>
+            <li><strong>Sécurité :</strong> Interception de virage à 90° avec système de mémoire de direction.</li>
+        </ul>
+    </div>
+
+    <script>particlesJS("particles-js", {"particles": {"number": {"value": 50}, "color": {"value": "#00f2ff"}, "shape": {"type": "edge"}, "opacity": {"value": 0}, "line_linked": {"enable": true, "distance": 200, "color": "#00f2ff", "opacity": 0.6, "width": 1.5}}});</script>
+</body>
+</html>
