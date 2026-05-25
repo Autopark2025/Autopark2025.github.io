@@ -32,7 +32,6 @@
 
         .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; max-width: 1100px; margin: 0 auto 100px; padding: 20px; }
         
-        /* Cartes avec effet Halo et Animation Flottante */
         .card { 
             background: #0a0a0a; border: 1px solid #333; padding: 40px; border-radius: 20px; 
             transition: 0.4s; cursor: pointer; position: relative; overflow: hidden; 
@@ -45,7 +44,6 @@
         }
         .card:hover::before { opacity: 1; }
         
-        /* Animation de flottement */
         @keyframes float {
             0% { transform: translateY(0px); }
             50% { transform: translateY(-15px); }
@@ -57,6 +55,8 @@
         
         .btn { display: inline-block; margin-top: 20px; padding: 12px 25px; border: 1px solid var(--accent); color: var(--accent); text-decoration: none; border-radius: 50px; transition: 0.3s; }
         .btn:hover { background: var(--accent); color: #000; }
+
+        @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
@@ -74,7 +74,245 @@
 
         <section class="grid">
             <div class="card"><h2>Labyrinthe</h2><a href="labyrinthe.html" class="btn">Explorer</a></div>
-            <div class="card"><h2>Suivi de Ligne</h2><a href="suivi_ligne.html" class="btn">Explorer</a></div>
+            <div class="card"><h2>Suivi de Ligne</h2><a href="sl_menu.html" class="btn">Explorer</a></div>
+            <div class="card"><h2>Suivi d'Objets</h2><span class="btn">Bientôt</span></div>
+        </section>
+    </div>
+
+    <script>
+        particlesJS("particles-js", {
+            "particles": {
+                "number": { "value": 100, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": "#00f2ff" },
+                "shape": { "type": "edge" },
+                "size": { "value": 0 },
+                "line_linked": { "enable": true, "distance": 150, "color": "#00f2ff", "opacity": 0.5, "width": 1.5 },
+                "move": { "enable": true, "speed": 1.5 }
+            },
+            "interactivity": {
+                "events": { "onhover": { "enable": true, "mode": "grab" } },
+                "modes": { "grab": { "distance": 250, "line_linked": { "opacity": 1 } } }
+            }
+        });
+
+        const textElement = document.getElementById('typing-text');
+        const phrases = ["ROBOT AUTONOME", "GESTION LABYRINTHE", "SUIVI DE TRAJECTOIRE", "VISION EMBARQUÉE"];
+        let phraseIndex = 0, charIndex = 0, isDeleting = false;
+        function type() {
+            const currentPhrase = phrases[phraseIndex];
+            textElement.textContent = isDeleting ? currentPhrase.substring(0, charIndex - 1) : currentPhrase.substring(0, charIndex + 1);
+            charIndex = isDeleting ? charIndex - 1 : charIndex + 1;
+            if (!isDeleting && charIndex === currentPhrase.length) { setTimeout(() => isDeleting = true, 2000); }
+            else if (isDeleting && charIndex === 0) { isDeleting = false; phraseIndex = (phraseIndex + 1) % phrases.length; }
+            setTimeout(type, isDeleting ? 80 : 150);
+        }
+        type();
+
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                card.style.setProperty('--x', `${e.clientX - rect.left}px`);
+                card.style.setProperty('--y', `${e.clientY - rect.top}px`);
+            });
+        });
+    </script>
+</body>
+</html><!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | Système Cherokey 4WD</title>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <style>
+        :root {
+            --dark: #050505;
+            --accent: #00f2ff;
+            --text: #e0e0e0;
+        }
+        body { margin: 0; background-color: var(--dark); color: var(--text); font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        
+        #particles-js { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: 0; }
+        .main-content { position: relative; z-index: 1; }
+
+        header { padding: 80px 20px; text-align: center; }
+        h1 { font-size: 3.5rem; margin: 0; letter-spacing: -1px; text-transform: uppercase; color: #fff; }
+        .subtitle { color: #fff; letter-spacing: 3px; margin-top: 15px; font-weight: 300; text-transform: uppercase; font-size: 1.5rem; }
+        #typing-text { color: var(--accent); font-weight: bold; }
+        .cursor { color: #fff; animation: blink 0.7s infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        .showcase { max-width: 900px; margin: 0 auto 50px; padding: 20px; }
+        .robot-img { 
+            width: 100%; border-radius: 30px; 
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 20px rgba(0,242,255,0.3); 
+            border: 1px solid var(--accent); transition: 0.5s;
+        }
+
+        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; max-width: 1100px; margin: 0 auto 100px; padding: 20px; }
+        
+        .card { 
+            background: #0a0a0a; border: 1px solid #333; padding: 40px; border-radius: 20px; 
+            transition: 0.4s; cursor: pointer; position: relative; overflow: hidden; 
+        }
+        .card:hover { border-color: var(--accent); transform: translateY(-20px); }
+        .card::before {
+            content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(200px circle at var(--x, 50%) var(--y, 50%), rgba(0, 242, 255, 0.15), transparent 80%);
+            opacity: 0; transition: opacity 0.3s; pointer-events: none;
+        }
+        .card:hover::before { opacity: 1; }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        .card:nth-child(1) { animation: float 4s ease-in-out infinite; }
+        .card:nth-child(2) { animation: float 5s ease-in-out infinite; }
+        .card:nth-child(3) { animation: float 6s ease-in-out infinite; }
+        
+        .btn { display: inline-block; margin-top: 20px; padding: 12px 25px; border: 1px solid var(--accent); color: var(--accent); text-decoration: none; border-radius: 50px; transition: 0.3s; }
+        .btn:hover { background: var(--accent); color: #000; }
+
+        @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+    <div id="particles-js"></div>
+    <div class="main-content">
+        <header>
+            <h1>SYSTÈME CHEROKEY 4WD</h1>
+            <p class="subtitle"><span id="typing-text"></span><span class="cursor">|</span></p>
+        </header>
+
+        <div class="showcase">
+            <img src="Robot.jpeg" alt="Robot" class="robot-img">
+        </div>
+
+        <section class="grid">
+            <div class="card"><h2>Labyrinthe</h2><a href="labyrinthe.html" class="btn">Explorer</a></div>
+            <div class="card"><h2>Suivi de Ligne</h2><a href="sl_menu.html" class="btn">Explorer</a></div>
+            <div class="card"><h2>Suivi d'Objets</h2><span class="btn">Bientôt</span></div>
+        </section>
+    </div>
+
+    <script>
+        particlesJS("particles-js", {
+            "particles": {
+                "number": { "value": 100, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": "#00f2ff" },
+                "shape": { "type": "edge" },
+                "size": { "value": 0 },
+                "line_linked": { "enable": true, "distance": 150, "color": "#00f2ff", "opacity": 0.5, "width": 1.5 },
+                "move": { "enable": true, "speed": 1.5 }
+            },
+            "interactivity": {
+                "events": { "onhover": { "enable": true, "mode": "grab" } },
+                "modes": { "grab": { "distance": 250, "line_linked": { "opacity": 1 } } }
+            }
+        });
+
+        const textElement = document.getElementById('typing-text');
+        const phrases = ["ROBOT AUTONOME", "GESTION LABYRINTHE", "SUIVI DE TRAJECTOIRE", "VISION EMBARQUÉE"];
+        let phraseIndex = 0, charIndex = 0, isDeleting = false;
+        function type() {
+            const currentPhrase = phrases[phraseIndex];
+            textElement.textContent = isDeleting ? currentPhrase.substring(0, charIndex - 1) : currentPhrase.substring(0, charIndex + 1);
+            charIndex = isDeleting ? charIndex - 1 : charIndex + 1;
+            if (!isDeleting && charIndex === currentPhrase.length) { setTimeout(() => isDeleting = true, 2000); }
+            else if (isDeleting && charIndex === 0) { isDeleting = false; phraseIndex = (phraseIndex + 1) % phrases.length; }
+            setTimeout(type, isDeleting ? 80 : 150);
+        }
+        type();
+
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                card.style.setProperty('--x', `${e.clientX - rect.left}px`);
+                card.style.setProperty('--y', `${e.clientY - rect.top}px`);
+            });
+        });
+    </script>
+</body>
+</html><!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | Système Cherokey 4WD</title>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <style>
+        :root {
+            --dark: #050505;
+            --accent: #00f2ff;
+            --text: #e0e0e0;
+        }
+        body { margin: 0; background-color: var(--dark); color: var(--text); font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        
+        #particles-js { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: 0; }
+        .main-content { position: relative; z-index: 1; }
+
+        header { padding: 80px 20px; text-align: center; }
+        h1 { font-size: 3.5rem; margin: 0; letter-spacing: -1px; text-transform: uppercase; color: #fff; }
+        .subtitle { color: #fff; letter-spacing: 3px; margin-top: 15px; font-weight: 300; text-transform: uppercase; font-size: 1.5rem; }
+        #typing-text { color: var(--accent); font-weight: bold; }
+        .cursor { color: #fff; animation: blink 0.7s infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        .showcase { max-width: 900px; margin: 0 auto 50px; padding: 20px; }
+        .robot-img { 
+            width: 100%; border-radius: 30px; 
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 20px rgba(0,242,255,0.3); 
+            border: 1px solid var(--accent); transition: 0.5s;
+        }
+
+        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; max-width: 1100px; margin: 0 auto 100px; padding: 20px; }
+        
+        .card { 
+            background: #0a0a0a; border: 1px solid #333; padding: 40px; border-radius: 20px; 
+            transition: 0.4s; cursor: pointer; position: relative; overflow: hidden; 
+        }
+        .card:hover { border-color: var(--accent); transform: translateY(-20px); }
+        .card::before {
+            content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(200px circle at var(--x, 50%) var(--y, 50%), rgba(0, 242, 255, 0.15), transparent 80%);
+            opacity: 0; transition: opacity 0.3s; pointer-events: none;
+        }
+        .card:hover::before { opacity: 1; }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        .card:nth-child(1) { animation: float 4s ease-in-out infinite; }
+        .card:nth-child(2) { animation: float 5s ease-in-out infinite; }
+        .card:nth-child(3) { animation: float 6s ease-in-out infinite; }
+        
+        .btn { display: inline-block; margin-top: 20px; padding: 12px 25px; border: 1px solid var(--accent); color: var(--accent); text-decoration: none; border-radius: 50px; transition: 0.3s; }
+        .btn:hover { background: var(--accent); color: #000; }
+
+        @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+    <div id="particles-js"></div>
+    <div class="main-content">
+        <header>
+            <h1>SYSTÈME CHEROKEY 4WD</h1>
+            <p class="subtitle"><span id="typing-text"></span><span class="cursor">|</span></p>
+        </header>
+
+        <div class="showcase">
+            <img src="Robot.jpeg" alt="Robot" class="robot-img">
+        </div>
+
+        <section class="grid">
+            <div class="card"><h2>Labyrinthe</h2><a href="labyrinthe.html" class="btn">Explorer</a></div>
+            <div class="card"><h2>Suivi de Ligne</h2><a href="sl_menu.html" class="btn">Explorer</a></div>
             <div class="card"><h2>Suivi d'Objets</h2><span class="btn">Bientôt</span></div>
         </section>
     </div>
