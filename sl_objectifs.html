@@ -2,28 +2,43 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Objectifs | Suivi de Ligne</title>
+    <title>Objectifs & Technique | Suivi de Ligne</title>
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <style>
-        body { margin: 0; background: #000; color: #fff; font-family: 'Inter', sans-serif; padding: 40px; }
+        body { margin: 0; background: #000; color: #fff; font-family: 'Inter', sans-serif; padding: 40px; line-height: 1.6; }
         #particles-js { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -1; }
-        .container { max-width: 800px; margin: 40px auto; background: #0a0a0a; padding: 40px; border-radius: 20px; border: 1px solid #333; }
-        h1 { color: #00f2ff; border-left: 4px solid #00f2ff; padding-left: 15px; }
+        .container { max-width: 900px; margin: 0 auto; background: #0a0a0a; padding: 40px; border-radius: 20px; border: 1px solid #333; }
+        h1 { color: #00f2ff; border-left: 4px solid #00f2ff; padding-left: 15px; margin-bottom: 30px; }
+        h2 { color: #00f2ff; margin-top: 30px; font-size: 1.4rem; }
+        ul { padding-left: 20px; }
+        li { margin-bottom: 10px; }
+        .highlight { color: #00f2ff; font-weight: bold; }
     </style>
 </head>
 <body>
     <div id="particles-js"></div>
     <div class="container">
         <a href="sl_menu.html" style="color:#00f2ff; text-decoration:none;">⬅ Retour Menu</a>
+        
         <h1>Objectifs du Système</h1>
-        <p>Le robot Cherokey 4WD est conçu pour une navigation autonome par suivi de ligne. Les objectifs techniques sont :</p>
+        <p>Le Cherokey 4WD est une plateforme robotique autonome visant une efficacité maximale dans le suivi de trajectoire sur piste complexe.</p>
+        
+        <h2>Objectifs Techniques</h2>
         <ul>
-            <li><strong>Détection :</strong> Utilisation du capteur HuskyLens en mode "Line Tracking".</li>
-            <li><strong>Asservissement (P) :</strong> Correction proportionnelle (Kp=0.7) pour une trajectoire fluide sans oscillations.</li>
-            <li><strong>Interception :</strong> Algorithme de gestion des virages à 90° avec "mémoire de direction" pour récupérer la ligne après une perte de signal temporaire.</li>
+            <li><strong>Optimisation de la Vision :</strong> Exploiter la puissance de la HuskyLens pour traiter les vecteurs de ligne en temps réel.</li>
+            <li><strong>Fluidité de Mouvement :</strong> Minimiser les saccades par un contrôle proportionnel précis.</li>
+            <li><strong>Robustesse (Anti-perte) :</strong> Garantir une continuité de mouvement même en cas de virages à angle droit (90°) ou de brèves zones aveugles.</li>
         </ul>
-        <p>Ce système permet d'éviter les pertes de trajectoire dues aux reflets ou aux angles brusques.</p>
+
+        <h2>Fonctionnement du Code</h2>
+        <p>Le code repose sur trois piliers fondamentaux :</p>
+        <ul>
+            <li><span class="highlight">Calcul d'Erreur (Proportionnel) :</span> Le robot calcule la distance entre le centre de l'image (160 px) et le centre de la ligne détectée. Cette erreur est multipliée par le gain <span class="highlight">Kp (0.7)</span> pour corriger la vitesse des moteurs proportionnellement.</li>
+            <li><span class="highlight">Anti-Saccade :</span> Le filtre de 80ms permet de distinguer un virage réel d'un simple bruit de capteur (reflet ou ombre), évitant au robot de pivoter inutilement.</li>
+            <li><span class="highlight">Stratégie de "Mémoire de Direction" :</span> Si la ligne disparaît, le robot se souvient de la dernière direction (`lastDirection`) pour pivoter sur lui-même dans le sens du virage manqué, permettant une récupération instantanée de la piste.</li>
+        </ul>
     </div>
+
     <script>particlesJS("particles-js", {"particles": {"number": {"value": 50}, "color": {"value": "#00f2ff"}, "shape": {"type": "edge"}, "opacity": {"value": 0}, "line_linked": {"enable": true, "distance": 200, "color": "#00f2ff", "opacity": 0.6, "width": 1.5}}});</script>
 </body>
 </html>
