@@ -7,26 +7,23 @@
     <style>
         body { margin: 0; background: #000; color: #fff; font-family: 'Inter', sans-serif; padding: 40px; }
         #particles-js { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -1; }
-        .back-link { color: #00f2ff; text-decoration: none; font-weight: bold; }
         .container { max-width: 800px; margin: 40px auto; background: #0a0a0a; padding: 40px; border-radius: 20px; border: 1px solid #333; }
-        h1 { color: #fff; border-left: 4px solid #00f2ff; padding-left: 15px; }
-        ul { line-height: 1.8; }
+        h1 { color: #00f2ff; border-left: 4px solid #00f2ff; padding-left: 15px; }
     </style>
 </head>
 <body>
     <div id="particles-js"></div>
-    <a href="sl_menu.html" class="back-link">⬅ Retour au menu Suivi</a>
-    
     <div class="container">
-        <h1>Objectifs & Explications</h1>
-        <p>Le système assure une navigation autonome fluide via :</p>
+        <a href="sl_menu.html" style="color:#00f2ff; text-decoration:none;">⬅ Retour Menu</a>
+        <h1>Objectifs du Système</h1>
+        <p>Le robot Cherokey 4WD est conçu pour une navigation autonome par suivi de ligne. Les objectifs techniques sont :</p>
         <ul>
-            <li><strong>Détection :</strong> Algorithme "Line Tracking" HuskyLens.</li>
-            <li><strong>Asservissement (P) :</strong> Correction proportionnelle (Kp=0.7) pour maintenir le cap.</li>
-            <li><strong>Sécurité :</strong> Interception de virage à 90° avec système de mémoire de direction.</li>
+            <li><strong>Détection :</strong> Utilisation du capteur HuskyLens en mode "Line Tracking".</li>
+            <li><strong>Asservissement (P) :</strong> Correction proportionnelle (Kp=0.7) pour une trajectoire fluide sans oscillations.</li>
+            <li><strong>Interception :</strong> Algorithme de gestion des virages à 90° avec "mémoire de direction" pour récupérer la ligne après une perte de signal temporaire.</li>
         </ul>
+        <p>Ce système permet d'éviter les pertes de trajectoire dues aux reflets ou aux angles brusques.</p>
     </div>
-
     <script>particlesJS("particles-js", {"particles": {"number": {"value": 50}, "color": {"value": "#00f2ff"}, "shape": {"type": "edge"}, "opacity": {"value": 0}, "line_linked": {"enable": true, "distance": 200, "color": "#00f2ff", "opacity": 0.6, "width": 1.5}}});</script>
 </body>
 </html>
