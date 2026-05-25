@@ -6,86 +6,45 @@
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <style>
         :root { --dark: #050505; --accent: #00f2ff; }
-        body { margin: 0; background-color: #000; color: #e0e0e0; font-family: 'Inter', sans-serif; padding-top: 100px; }
-        
+        body { margin: 0; background: #000; font-family: 'Inter', sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; }
         #particles-js { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -1; }
         
-        /* Menu de navigation interne */
-        .top-nav { position: fixed; top: 0; left: 0; width: 100%; background: rgba(0,0,0,0.95); display: flex; justify-content: center; padding: 20px 0; gap: 40px; z-index: 100; border-bottom: 1px solid #333; }
-        .top-nav a { color: #fff; text-decoration: none; font-weight: bold; font-size: 1rem; transition: 0.3s; }
-        .top-nav a:hover { color: var(--accent); }
-
-        .home-btn { position: fixed; top: 20px; left: 20px; color: var(--accent); text-decoration: none; font-weight: bold; z-index: 101; }
+        /* Animation de flottement pour les boutons */
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-15px); } 100% { transform: translateY(0px); } }
         
-        .container { max-width: 900px; margin: 0 auto; padding: 20px; z-index: 1; }
-        h1 { color: #fff; font-size: 3rem; border-left: 4px solid var(--accent); padding-left: 20px; margin-bottom: 40px; }
+        .menu-wrapper { display: flex; flex-direction: column; gap: 30px; z-index: 2; }
         
-        section { margin: 60px 0; background: #0a0a0a; padding: 40px; border-radius: 20px; border: 1px solid #333; }
-        h2 { color: var(--accent); margin-top: 0; }
+        .menu-btn { 
+            width: 400px; padding: 30px; background: #0a0a0a; border: 1px solid #333; 
+            color: #fff; text-decoration: none; border-radius: 20px; text-align: center; 
+            font-weight: bold; font-size: 1.5rem; transition: 0.3s;
+            animation: float 4s ease-in-out infinite;
+        }
+        .menu-btn:nth-child(1) { animation-delay: 0s; }
+        .menu-btn:nth-child(2) { animation-delay: 0.5s; }
+        .menu-btn:nth-child(3) { animation-delay: 1s; }
         
-        pre { background: #000; padding: 20px; border-radius: 10px; color: #00f2ff; overflow-x: auto; border: 1px solid #333; font-family: monospace; white-space: pre-wrap; }
-        .video-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
-        .video-box { background: #000; padding: 10px; border-radius: 10px; border: 1px solid #333; text-align: center; }
+        .menu-btn:hover { border-color: var(--accent); background: #111; transform: scale(1.05); }
     </style>
 </head>
 <body>
 
     <div id="particles-js"></div>
-    
-    <a href="index.html" class="home-btn">🏠 Accueil</a>
-    
-    <nav class="top-nav">
-        <a href="#objectifs">OBJECTIFS</a>
-        <a href="#code">CODE SOURCE</a>
-        <a href="#tests">TESTS & VALIDATIONS</a>
-    </nav>
 
-    <div class="container">
-        <h1>Suivi de Ligne</h1>
-        
-        <section id="objectifs">
-            <h2>Objectifs</h2>
-            <p>Le système assure une navigation autonome fluide via :</p>
-            <ul>
-                <li><strong>Détection :</strong> Algorithme "Line Tracking" HuskyLens.</li>
-                <li><strong>Asservissement (P) :</strong> Correction proportionnelle (Kp=0.7).</li>
-                <li><strong>Sécurité :</strong> Interception de virage 90° avec mémoire de direction.</li>
-            </ul>
-        </section>
-
-        <section id="code">
-            <h2>Code Source</h2>
-            <pre><code>#include &lt;HUSKYLENS.h&gt;
-#include &lt;Wire.h&gt;
-// ... (Ton code complet ici)
-void carDrive(bool lD, int lS, bool rD, int rS) {
-  digitalWrite(directionPin_M2, !lD); analogWrite(speedPin_M2, lS);
-  digitalWrite(directionPin_M1, !rD); analogWrite(speedPin_M1, rS);
-}</code></pre>
-        </section>
-
-        <section id="tests">
-            <h2>Tests & Validations</h2>
-            <div class="video-grid">
-                <div class="video-box">
-                    <p style="color: var(--accent);">Virage 90°</p>
-                    <video width="100%" controls><source src="video_90.mp4" type="video/mp4"></video>
-                </div>
-                <div class="video-box">
-                    <p style="color: var(--accent);">Validation globale</p>
-                    <video width="100%" controls><source src="video_1.mp4" type="video/mp4"></video>
-                </div>
-            </div>
-        </section>
+    <div class="menu-wrapper">
+        <a href="#objectifs" class="menu-btn">Objectifs</a>
+        <a href="#code" class="menu-btn">Code Source</a>
+        <a href="#tests" class="menu-btn">Tests & Validations</a>
     </div>
 
     <script>
         particlesJS("particles-js", {
             "particles": {
-                "number": { "value": 80 },
+                "number": { "value": 50 },
                 "color": { "value": "#00f2ff" },
-                "opacity": { "value": 0 },
-                "line_linked": { "enable": true, "distance": 150, "color": "#00f2ff", "opacity": 0.5, "width": 1 }
+                "shape": { "type": "edge" },
+                "opacity": { "value": 0 }, // Opacité 0 pour masquer les points
+                "line_linked": { "enable": true, "distance": 200, "color": "#00f2ff", "opacity": 0.6, "width": 1.5 }
             }
         });
     </script>
