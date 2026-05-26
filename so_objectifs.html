@@ -5,24 +5,19 @@
     <title>Objectifs | Suivi d'Objets</title>
     <style>
         body { margin: 0; background: #000; color: #fff; padding: 40px; font-family: sans-serif; line-height: 1.6; }
-        .container { max-width: 900px; margin: 0 auto; background: #0a0a0a; padding: 40px; border-radius: 20px; border: 1px solid #333; }
-        h1 { color: #00f2ff; border-left: 4px solid #00f2ff; padding-left: 15px; }
-        .highlight { color: #00f2ff; font-weight: bold; }
+        .container { max-width: 800px; margin: 0 auto; background: #0a0a0a; padding: 40px; border-radius: 20px; border: 1px solid #333; }
+        h1 { color: #00f2ff; }
     </style>
 </head>
 <body>
     <div class="container">
         <a href="so_menu.html" style="color:#00f2ff; text-decoration:none;">⬅ Retour Menu</a>
-        <h1>Objectifs & Mécanisme de Poursuite</h1>
-        <p>Le robot Cherokey 4WD est configuré pour maintenir une cible dans son champ de vision via la caméra intelligente HuskyLens.</p>
-        
-        <h2>Explications techniques :</h2>
+        <h1>Objectifs du Suivi d'Objet</h1>
+        <p>Le but est simple : le robot doit agir comme un cameraman automatique qui garde une cible toujours au centre de son image.</p>
         <ul>
-            <li><span class="highlight">Analyse de la Bounding Box :</span> La caméra renvoie les coordonnées (X, Y) et les dimensions (Width, Height) de l'objet appris. Le robot calcule l'erreur par rapport au centre de l'image (160 px).</li>
-            <li><span class="highlight">Asservissement Proportionnel (P) :</span> Nous utilisons deux gains distincts : <br>
-                - <em>Kp_Rotation (1.1)</em> : Gère la correction de cap pour recentrer l'objet latéralement.<br>
-                - <em>Kp_Distance (0.9)</em> : Gère l'approche. Si l'objet est trop petit, le robot avance ; s'il est trop grand, le robot recule pour garder une distance de sécurité.</li>
-            <li><span class="highlight">Gestion de la Friction :</span> L'ajout d'un <em>MIN_PWM (45)</em> compense la résistance mécanique des moteurs, permettant au robot d'entamer son mouvement de manière fluide sans à-coups brutaux.</li>
+            <li><strong>Verrouillage :</strong> La caméra repère un objet précis (couleur ou forme) et nous donne sa position (X, Y) et sa taille.</li>
+            <li><strong>Réaction :</strong> Si l'objet part à droite, le robot tourne à droite. Si l'objet s'éloigne (devient plus petit), le robot avance.</li>
+            <li><strong>Fluidité :</strong> Le code ajuste la vitesse des moteurs proportionnellement à l'écart constaté. Plus l'objet est loin du centre, plus le robot tourne vite.</li>
         </ul>
     </div>
 </body>
