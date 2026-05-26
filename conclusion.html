@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Conclusion | Projet Robotique</title>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <style>
+        body { margin: 0; background: #000; color: #fff; font-family: 'Inter', sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; overflow: hidden; }
+        #particles-js { position: fixed; width: 100%; height: 100%; z-index: -1; }
+        .container { max-width: 800px; padding: 40px; background: #0a0a0a; border: 1px solid #333; border-radius: 20px; text-align: left; }
+        h1 { color: #00f2ff; text-align: center; }
+        p, li { line-height: 1.8; color: #ccc; }
+        .back-link { display: block; text-align: center; margin-top: 30px; color: #00f2ff; text-decoration: none; font-size: 1.2rem; }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+    <div class="container">
+        <h1>Synthèse du Projet</h1>
+        <p>Ce travail a été articulé autour de trois axes fondamentaux, illustrant la maîtrise de la <strong>chaîne d'acquisition et de traitement de l'information</strong> :</p>
+        <ul>
+            <li><strong>Labyrinthe :</strong> Mise en œuvre d'une logique séquentielle pour l'exploration autonome en environnement inconnu.</li>
+            <li><strong>Suivi de Ligne :</strong> Application de l'asservissement PID pour la régulation de trajectoire, mettant en évidence l'influence critique des gains sur la stabilité système.</li>
+            <li><strong>Suivi d'Objets :</strong> Fusion entre traitement d'image (HuskyLens) et commande proportionnelle pour le maintien d'une consigne de poursuite.</li>
+        </ul>
+        <p><em>En conclusion, ces travaux valident notre capacité à appréhender des problématiques complexes d'automatique. Cette expérience constitue une base solide pour aborder la modélisation et la commande avancée dans notre poursuite d'études.</em></p>
+        
+        <a href="index.html" class="back-link">⬅ Retour Accueil</a>
+    </div>
+    <script>
+        particlesJS("particles-js", {"particles": {"number": {"value": 60}, "color": {"value": "#00f2ff"}, "shape": {"type": "circle"}, "size": {"value": 0}, "line_linked": {"enable": true, "distance": 150, "color": "#00f2ff", "opacity": 0.6, "width": 2}}});
+    </script>
+</body>
+</html>
