@@ -8,26 +8,36 @@
         .container { max-width: 900px; margin: 0 auto; background: #0a0a0a; padding: 30px; border-radius: 20px; border: 1px solid #333; }
         pre { color: #00f2ff; background: #000; padding: 20px; border-radius: 10px; overflow-x: auto; font-family: monospace; }
         h2 { color: #00f2ff; }
+        .box { background: #111; padding: 15px; border-radius: 10px; margin-bottom: 20px; }
     </style>
 </head>
 <body>
     <div class="container">
         <a href="so_menu.html" style="color:#00f2ff; text-decoration:none;">⬅ Retour Menu</a>
         
-        <h2>Analyse du code</h2>
-        <p>Le programme fonctionne en boucle fermée : il interroge la caméra, calcule l'erreur, applique le gain proportionnel et ajuste la puissance des moteurs. Le mixage des signaux (`leftSpeed` et `rightSpeed`) permet de transformer une correction linéaire (X) et une correction de distance (Z) en une commande de rotation différentielle.</p>
+        <h2>Principe de fonctionnement</h2>
+        <div class="box">
+            <p>Le robot utilise un <strong>asservissement proportionnel</strong> :</p>
+            <ul>
+                <li><strong>Correction latérale (X) :</strong> Le robot calcule l'écart entre le centre de la cible et le centre de la caméra (160 px). Si l'objet est à droite, il tourne à droite.</li>
+                <li><strong>Gestion de distance (Z) :</strong> On compare la largeur actuelle de l'objet avec une <code>TARGET_SIZE</code> idéale. Si l'objet est trop petit, le robot avance.</li>
+                <li><strong>Mixage :</strong> On combine ces deux informations pour ajuster indépendamment la vitesse de la roue gauche et de la roue droite.</li>
+                <li><strong>Anti-Friction :</strong> La constante <code>MIN_PWM</code> ajoute une "poussée" minimale pour éviter que le robot ne reste bloqué par la résistance de ses propres moteurs.</li>
+            </ul>
+        </div>
 
-        <h2>Code Arduino</h2>
+        <h2>Code Source Arduino</h2>
         <pre><code>#include &lt;HUSKYLENS.h&gt;
 #include &lt;Wire.h&gt;
 
-const int directionPin_M1 = 4;
-const int speedPin_M1     = 5;
-const int speedPin_M2     = 6;
-const int directionPin_M2 = 7;
+// Configuration des moteurs (Romeo BLE)
+const int directionPin_M1 = 4; const int speedPin_M1 = 5;
+const int speedPin_M2 = 6;     const int directionPin_M2 = 7;
 
 HUSKYLENS huskylens;
-const int CENTER_X = 160;
+
+// Paramètres de suivi
+const int CENTER_X = 160; 
 const int TARGET_SIZE = 65;
 const int TOLERANCE_SIZE = 12;
 const float Kp_Rotation = 1.1;
@@ -35,28 +45,33 @@ const float Kp_Distance = 0.9;
 const int MIN_PWM = 45;
 
 void setup() {
-  Serial.begin(115200);
   Wire.begin();
-  pinMode(directionPin_M1, OUTPUT); pinMode(speedPin_M1, OUTPUT);
-  pinMode(speedPin_M2, OUTPUT); pinMode(directionPin_M2, OUTPUT);
-  while (!huskylens.begin(Wire)) { delay(500); }
+  huskylens.begin(Wire);
   huskylens.writeAlgorithm(ALGORITHM_OBJECT_TRACKING);
 }
 
 void loop() {
-  if (!huskylens.request() || !huskylens.available()) { carStop(); return; }
+  if (!huskylens.request() || !huskylens.available()) {
+    carStop(); return;
+  }
   
   while (huskylens.available()) {
     HUSKYLENSResult result = huskylens.read();
     if (result.command == COMMAND_RETURN_BLOCK && result.ID == 1) {
+      
+      // 1. Calcul des erreurs
       int errorX = result.xCenter - CENTER_X; 
-      int rotationCorrection = errorX * Kp_Rotation;
       int errorSize = TARGET_SIZE - result.width; 
+      
+      // 2. Calcul des corrections
+      int rotationCorrection = errorX * Kp_Rotation;
       int moveSpeed = (abs(errorSize) > TOLERANCE_SIZE) ? -errorSize * Kp_Distance : 0;
 
+      // 3. Application aux moteurs
       int leftSpeed  = moveSpeed + rotationCorrection;
       int rightSpeed = moveSpeed - rotationCorrection;
 
+      // Compensation de friction
       if (abs(leftSpeed) > 5) leftSpeed += (leftSpeed > 0) ? MIN_PWM : -MIN_PWM;
       if (abs(rightSpeed) > 5) rightSpeed += (rightSpeed > 0) ? MIN_PWM : -MIN_PWM;
 
