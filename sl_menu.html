@@ -7,17 +7,52 @@
     <style>
         body { margin: 0; background: #000; color: #fff; font-family: 'Inter', sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; }
         #particles-js { position: fixed; width: 100%; height: 100%; z-index: -1; }
+        
         @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-15px); } 100% { transform: translateY(0px); } }
-        .btn { width: 400px; padding: 30px; margin: 15px; background: #0a0a0a; border: 1px solid #333; text-decoration: none; color: #fff; border-radius: 20px; text-align: center; font-weight: bold; font-size: 1.5rem; transition: 0.3s; animation: float 4s ease-in-out infinite; }
-        .btn:hover { border-color: #00f2ff; background: #111; transform: scale(1.05); }
+        
+        .btn { 
+            width: 500px;           /* Largeur augmentée */
+            padding: 45px;          /* Espace interne augmenté pour un aspect "massif" */
+            margin: 20px; 
+            background: #0a0a0a; 
+            border: 2px solid #333; /* Bordure un peu plus épaisse pour le style */
+            text-decoration: none; 
+            color: #fff; 
+            border-radius: 30px;    /* Coins plus arrondis */
+            text-align: center; 
+            font-weight: bold; 
+            font-size: 2rem;        /* Taille du texte agrandie */
+            transition: 0.3s; 
+            animation: float 4s ease-in-out infinite; 
+        }
+        
+        .btn:hover { 
+            border-color: #00f2ff; 
+            background: #111; 
+            transform: scale(1.1);  /* Effet de zoom plus marqué au survol */
+            box-shadow: 0 0 30px rgba(0, 242, 255, 0.2);
+        }
     </style>
 </head>
 <body>
     <div id="particles-js"></div>
+    
     <a href="sl_objectifs.html" class="btn">Objectifs</a>
     <a href="sl_code.html" class="btn">Code Source</a>
     <a href="sl_tests.html" class="btn">Tests & Validations</a>
-    <a href="index.html" style="margin-top:40px; color:#00f2ff; text-decoration:none;">⬅ Retour Accueil</a>
-    <script>particlesJS("particles-js", {"particles": {"number": {"value": 50}, "color": {"value": "#00f2ff"}, "shape": {"type": "edge"}, "opacity": {"value": 0}, "line_linked": {"enable": true, "distance": 200, "color": "#00f2ff", "opacity": 0.6, "width": 1.5}}});</script>
+    
+    <a href="index.html" style="margin-top:40px; color:#00f2ff; text-decoration:none; font-size: 1.2rem;">⬅ Retour Accueil</a>
+    
+    <script>
+        particlesJS("particles-js", {
+            "particles": {
+                "number": { "value": 50 },
+                "color": { "value": "#00f2ff" },
+                "shape": { "type": "edge" },
+                "opacity": { "value": 0.5 },
+                "line_linked": { "enable": true, "distance": 200, "color": "#00f2ff", "opacity": 0.6, "width": 1.5 }
+            }
+        });
+    </script>
 </body>
 </html>
